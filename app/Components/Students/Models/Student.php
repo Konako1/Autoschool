@@ -10,7 +10,6 @@ class Student extends Model
 
     protected $fillable = [
         'payment_needed',
-        'person_data_id',
         'group_id',
         'name',
         'surname',

@@ -105,7 +105,10 @@ $app->configure('app');
 |
 */
 
+$app->middleware([
+    App\Http\Middleware\Cors::class // Add this
 
+]);
 
 $app->router->group(
     [
@@ -117,21 +120,17 @@ $app->router->group(
 );
 
 $app->router->group(
-    [
-        'namespace' => 'App\Components\Students\Controllers',
-    ],
+    [],
     function ($router) {
         require __DIR__.'/../app/Components/Students/routes.php';
     }
 );
 
-//$app->router->group(
-//    [
-//        'namespace' => 'App\Components\Groups\Controllers',
-//    ],
-//    function ($router) {
-//        require __DIR__.'/../app/Components/Groups/routes.php';
-//    }
-//);
+$app->router->group(
+    [],
+    function ($router) {
+        require __DIR__.'/../app/Components/Groups/routes.php';
+    }
+);
 
 return $app;

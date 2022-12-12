@@ -29,6 +29,7 @@ class CreateTableStudents extends Migration
             $table->text('phone');
             $table->text('address');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

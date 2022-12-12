@@ -21,6 +21,7 @@ class Read
 //            )
             ->select(
                 'public.groups.id AS id',
+                'name',
                 'studying_start_date',
                 'studying_end_date',
                 'examen_date',

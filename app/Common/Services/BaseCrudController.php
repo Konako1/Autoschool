@@ -2,10 +2,9 @@
 
 namespace App\Common\Services;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-abstract class BaseCrudController extends Controller
+class BaseCrudController
 {
     /**
      * Метод получает из request и подготавливает параметры для получения списка записей с помощью сервиса FSOP:
@@ -25,10 +24,10 @@ abstract class BaseCrudController extends Controller
             $params['search'] = json_decode($request->get('search'), true);
         }
 
-        $filters = $request->has('filters') ? $request->get('filters') : [];
+        $filters = $request->has('filter') ? $request->get('filter') : [];
 
-        foreach ($filters as $filter) {
-            $params['filters'][] = json_decode($filter, true);
+        foreach ($filters as $filter => $value) {
+            $params['filter'][$filter] = json_decode($value, true);
         }
 
         $orders = $request->has('orders') ? $request->get('orders') : [];

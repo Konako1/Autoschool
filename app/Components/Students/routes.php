@@ -8,11 +8,11 @@
 if (isset($router)) {
     $router->group(
         [
-            'prefix' => '/api/students',
+            'prefix' => '/api',
             'namespace' => '\App\Components\Students\Controllers'
         ],
         function () use ($router) {
-            $router->get('/', ['uses' => 'StudentController@getAllRecords']);
+            $router->get('/students', ['uses' => 'StudentController@getAllRecords']);
         });
 
     $router->group(
