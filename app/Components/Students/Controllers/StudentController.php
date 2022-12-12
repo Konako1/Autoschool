@@ -23,12 +23,16 @@ class StudentController extends BaseCrudController
     {
         try {
             $params     = $this->getParams($request);
-            $records    = Read::all($params);
-            $total      = Read::count($params);
-            $result     = new SuccessResourceCollection($records->toArray(), $total);
+            if (isset($params['filters']['group']))
+                $result  = $this->getAllRecordsByGroup($request);
+            else {
+                $records = Read::all($params);
+                $total   = Read::count($params);
+                $result  = new SuccessResourceCollection($records->toArray(), $total);
+            }
         }
         catch (Exception $e) {
-            $result = new Exception('Ошибка при получении');
+            $result = $e;
         }
 
         return $result;
@@ -39,16 +43,16 @@ class StudentController extends BaseCrudController
      * GET /api/groups/{groupId:[0-9]+}/students
      *
      */
-    public function getAllRecordsByGroup(Request $request, string $groupId)
+    public function getAllRecordsByGroup(Request $request)
     {
         try {
             $params     = $this->getParams($request);
-            $records    = Read::allByGroupId($groupId, $params);
+            $records    = Read::allByGroupId($params['filters']['group'], $params);
             $total      = Read::count($params);
             $result     = new SuccessResourceCollection($records->toArray(), $total);
         }
         catch (Exception $e) {
-            $result = new Exception('Ошибка при получении');
+            $result = $e;
         }
 
         return $result;
@@ -66,7 +70,7 @@ class StudentController extends BaseCrudController
             $result     = new SuccessResource($records);
         }
         catch (Exception $e) {
-            $result = new Exception('Ошибка при получении');
+            $result = $e;
         }
 
         return $result;
@@ -80,12 +84,12 @@ class StudentController extends BaseCrudController
     public function createRecord(Request $request, string $groupId)
     {
         try {
-            $data = $this->getData($request);
+            $data   = $request->get('data');
             $record = Create::one($data, $groupId);
             $result = new SuccessResource($record);
         }
         catch(Exception $e) {
-            $result = new Exception('Ошибка при создании');
+            $result = $e;
         }
 
         return $result;
@@ -99,12 +103,12 @@ class StudentController extends BaseCrudController
     public function updateRecord(Request $request, string $groupId, string $id)
     {
         try {
-            $data = $this->getData($request);
+            $data   = $request->get('data');
             $record = Update::one($data, $groupId, $id);
             $result = new SuccessResource($record);
         }
         catch(Exception $e) {
-            $result = new Exception('Ошибка при обновлении');
+            $result = $e;
         }
 
         return $result;
@@ -122,7 +126,7 @@ class StudentController extends BaseCrudController
             $result = new SuccessResource($record);
         }
         catch(Exception $e) {
-            $result = new Exception('Ошибка при удалении');
+            $result = $e;
         }
 
         return $result;

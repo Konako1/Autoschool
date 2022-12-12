@@ -22,7 +22,6 @@ class Update
             DB::beginTransaction();
 
             $newGroup = $group->update($data);
-
             DB::commit();
         }
         catch (Exception $e) {
@@ -30,6 +29,6 @@ class Update
             throw new Exception('Чето не так пошло');
         }
 
-        return Read::byId((string) $newGroup->id);
+        return Read::byId((string) $group->id);
     }
 }

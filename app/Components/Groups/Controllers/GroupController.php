@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Components\Groups\Controllers;
 
 use App\Common\Resources\SuccessResource;
 use App\Common\Resources\SuccessResourceCollection;
@@ -28,7 +28,7 @@ class GroupController extends BaseCrudController
             $result     = new SuccessResourceCollection($records->toArray(), $total);
         }
         catch (Exception $e) {
-            $result = new Exception('Ошибка при получении');
+            $result = $e;
         }
 
         return $result;
@@ -46,7 +46,7 @@ class GroupController extends BaseCrudController
             $result     = new SuccessResource($records);
         }
         catch (Exception $e) {
-            $result = new Exception('Ошибка при получении');
+            $result = $e;
         }
 
         return $result;
@@ -60,12 +60,12 @@ class GroupController extends BaseCrudController
     public function createRecord(Request $request)
     {
         try {
-            $data = $this->getData($request);
+            $data   = $request->get('data');
             $record = Create::one($data);
             $result = new SuccessResource($record);
         }
         catch(Exception $e) {
-            $result = new Exception('Ошибка при создании');
+            $result = $e;
         }
 
         return $result;
@@ -79,12 +79,12 @@ class GroupController extends BaseCrudController
     public function updateRecord(Request $request, string $id)
     {
         try {
-            $data = $this->getData($request);
+            $data   = $request->get('data');
             $record = Update::one($data, $id);
             $result = new SuccessResource($record);
         }
         catch(Exception $e) {
-            $result = new Exception('Ошибка при обновлении');
+            $result = $e;
         }
 
         return $result;
@@ -102,7 +102,7 @@ class GroupController extends BaseCrudController
             $result = new SuccessResource($record);
         }
         catch(Exception $e) {
-            $result = new Exception('Ошибка при удалении');
+            $result = $e;
         }
 
         return $result;

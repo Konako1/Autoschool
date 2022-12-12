@@ -27,7 +27,7 @@ class Update
         try {
             DB::beginTransaction();
 
-            $newStudent = $student->update($data);
+            $student->update($data);
 
             DB::commit();
         }
@@ -36,6 +36,6 @@ class Update
             throw new Exception('Чето не так пошло');
         }
 
-        return Read::byId($groupId, (string) $newStudent->id);
+        return Read::byId($groupId, (string) $student->id);
     }
 }

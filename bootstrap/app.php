@@ -90,6 +90,11 @@ $app->configure('app');
 |
 */
 
+// ENABLING CORS
+$app->middleware([
+    App\Http\Middleware\CorsMiddleware::class
+]);
+
  //$app->register(App\Providers\AppServiceProvider::class);
  //$app->register(App\Providers\AuthServiceProvider::class);
  $app->register(App\Providers\EventServiceProvider::class);
@@ -105,33 +110,25 @@ $app->configure('app');
 |
 */
 
-
-
 $app->router->group(
-    [
-        'namespace' => 'App\Http\Controllers',
-    ],
+    [],
     function ($router) {
         require __DIR__.'/../routes/api.php';
     }
 );
 
 $app->router->group(
-    [
-        'namespace' => 'App\Components\Students\Controllers',
-    ],
+    [],
     function ($router) {
         require __DIR__.'/../app/Components/Students/routes.php';
     }
 );
 
-//$app->router->group(
-//    [
-//        'namespace' => 'App\Components\Groups\Controllers',
-//    ],
-//    function ($router) {
-//        require __DIR__.'/../app/Components/Groups/routes.php';
-//    }
-//);
+$app->router->group(
+    [],
+    function ($router) {
+        require __DIR__.'/../app/Components/Groups/routes.php';
+    }
+);
 
 return $app;

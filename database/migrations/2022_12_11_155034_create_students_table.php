@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTableStudents extends Migration
+class CreateStudentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -19,7 +19,7 @@ class CreateTableStudents extends Migration
 
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->double('payment_needed');
+            $table->float('payment_needed');
             $table->integer('group_id');
             $table->text('name');
             $table->text('surname');
@@ -29,6 +29,7 @@ class CreateTableStudents extends Migration
             $table->text('phone');
             $table->text('address');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

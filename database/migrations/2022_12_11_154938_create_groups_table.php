@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTableGroups extends Migration
+class CreateGroupsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -19,11 +19,13 @@ class CreateTableGroups extends Migration
 
         Schema::create('groups', function (Blueprint $table) {
             $table->id();
+            $table->text('name');
             $table->date('studying_start_date');
             $table->date('studying_end_date');
             $table->date('examen_date');
             $table->integer('instructor_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
