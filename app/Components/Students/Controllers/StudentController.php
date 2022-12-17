@@ -15,16 +15,35 @@ use Illuminate\Http\Request;
 class StudentController extends BaseCrudController
 {
     /**
+     * Фильтрация запроса на получение
+     * @param Request $request
+     *
+     * @return SuccessResourceCollection|Exception
+     */
+    public function baseGet(Request $request)
+    {
+        try {
+            $params = $this->getParams($request);
+            if (isset($params['filter']['group']))
+                $result = $this->getAllRecordsByGroup($params);
+            else
+                $result = $this->getAllRecords($params);
+        }
+        catch (Exception $e) {
+            $result = $e;
+        }
+
+        return $result;
+    }
+
+    /**
      * Получение списка записей вне зависимости от группы
      * GET api/students
      *
      */
-    public function getAllRecords(Request $request)
+    public function getAllRecords(array $params)
     {
         try {
-            $params     = $this->getParams($request);
-            if (isset($params['filter']['group']))
-                return $this->getAllRecordsByGroup($request);
             $records    = Read::all($params);
             $total      = Read::count($params);
             $result     = new SuccessResourceCollection($records->toArray(), $total);
@@ -37,14 +56,13 @@ class StudentController extends BaseCrudController
     }
 
     /**
-     * Получение списка записей
-     * GET /api/groups/{groupId:[0-9]+}/students
+     * Получение списка записей по группе
+     * GET /api/students?filter[group]={[0-9]+}
      *
      */
-    public function getAllRecordsByGroup(Request $request)
+    public function getAllRecordsByGroup(array $params)
     {
         try {
-            $params     = $this->getParams($request);
             $records    = Read::allByGroupId($params['filter']['group'], $params);
             $total      = Read::count($params);
             $result     = new SuccessResourceCollection($records->toArray(), $total);
@@ -58,13 +76,14 @@ class StudentController extends BaseCrudController
 
     /**
      * Получение записи
-     * GET /api/groups/{groupId:[0-9]+}/students/{id}
+     * GET /api/students/one?group={}&id={id}
      *
      */
-    public function getRecord(string $groupId, string $id)
+    public function getRecord(Request $request)
     {
         try {
-            $records    = Read::byId($groupId, $id);
+            $params = $request->query();
+            $records    = Read::byId($params['group'], $params['id']);
             $result     = new SuccessResource($records);
         }
         catch (Exception $e) {
@@ -76,14 +95,14 @@ class StudentController extends BaseCrudController
 
     /**
      * Создание одной записи
-     * POST /api/groups/{groupId:[0-9]+}/students
+     * POST /api/students/create?params...
      *
      */
-    public function createRecord(Request $request, string $groupId)
+    public function createRecord(Request $request)
     {
         try {
-            $data = $request->get('data');
-            $record = Create::one($data, $groupId);
+            $params = $request->query();
+            $record = Create::one($params, $params['group_id']);
             $result = new SuccessResource($record);
         }
         catch(Exception $e) {
@@ -95,14 +114,14 @@ class StudentController extends BaseCrudController
 
     /**
      * Обновление одной записи
-     * PUT /api/groups/{groupId:[0-9]+}/students/{id}
+     * POST /api/students/update?params...
      *
      */
-    public function updateRecord(Request $request, string $groupId, string $id)
+    public function updateRecord(Request $request)
     {
         try {
-            $data = $request->get('data');
-            $record = Update::one($data, $groupId, $id);
+            $params = $request->query();
+            $record = Update::one($params, $params['group_id'], $params['id']);
             $result = new SuccessResource($record);
         }
         catch(Exception $e) {
@@ -114,13 +133,14 @@ class StudentController extends BaseCrudController
 
     /**
      * Удаление одной записи
-     * DELETE /api/groups/{groupId:[0-9]+}/students/{id}
+     * POST /api/students/delete?group_id={}&id={}
      *
      */
-    public function deleteRecord(string $groupId, string $id)
+    public function deleteRecord(Request $request)
     {
         try {
-            $record = Delete::one($groupId, $id);
+            $params = $request->query();
+            $record = Delete::one($params['group_id'], $params['id']);
             $result = new SuccessResource($record);
         }
         catch(Exception $e) {

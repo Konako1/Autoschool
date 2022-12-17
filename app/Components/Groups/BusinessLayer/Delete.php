@@ -3,6 +3,7 @@
 namespace App\Components\Groups\BusinessLayer;
 
 use App\Components\Groups\Models\Group;
+use App\Components\Students\Models\Student;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
@@ -20,6 +21,8 @@ class Delete
 
         try {
             DB::beginTransaction();
+
+            Student::where('group_id', $group->id)->delete();
 
             $group->delete();
 

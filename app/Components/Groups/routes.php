@@ -14,7 +14,10 @@ if (isset($router)) {
             'namespace' => 'App\Components\Groups\Controllers'
         ],
         function () use ($router) {
-            $router->get('/', ['uses' => 'GroupController@getAllRecords']);
-            $router->post('/', ['uses' => 'GroupController@createRecord']);
+            $router->get('/',           ['uses' => 'GroupController@baseGet']);
+            $router->get('/one',        ['uses' => 'GroupController@getRecord']);
+            $router->get('/create',    ['uses' => 'GroupController@createRecord']);
+            $router->get('/update',    ['uses' => 'GroupController@updateRecord']);
+            $router->get('/delete',    ['uses' => 'GroupController@deleteRecord']);
         });
 }

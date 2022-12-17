@@ -3,9 +3,12 @@
 namespace App\Components\Groups\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Group extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'groups';
 
     protected $fillable = [
@@ -15,4 +18,6 @@ class Group extends Model
         'examen_date',
         'instructor_id',
     ];
+
+    protected $dates = ['deleted_at'];
 }
