@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Components\Groups\BusinessLayer;
+namespace App\Components\Modules\BusinessLayer;
 
-use App\Components\Groups\Models\Group;
+use App\Components\Modules\Models\Module;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
@@ -13,15 +13,15 @@ class Update
      */
     public static function one(array $data, string $id): array
     {
-        $group = Group::find($id);
-        if (!$group) {
+        $module = Module::find($id);
+        if (!$module) {
             throw new Exception("Группа $id не найдена");
         }
 
         try {
             DB::beginTransaction();
 
-            $group->update($data);
+            $module->update($data);
 
             DB::commit();
         }
@@ -30,6 +30,6 @@ class Update
             throw $e;
         }
 
-        return Read::byId((string) $group->id);
+        return Read::byId((string) $module->id);
     }
 }

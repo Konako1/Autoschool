@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Components\Groups\BusinessLayer;
+namespace App\Components\Modules\BusinessLayer;
 
-use App\Components\Groups\Models\Group;
+use App\Components\Modules\Models\Module;
 use App\Components\Students\Models\Student;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -14,17 +14,17 @@ class Delete
      */
     public static function one(string $id): array
     {
-        $group = Group::find($id);
-        if (!$group) {
-            throw new Exception("Группа $id не найдена");
+        $module = Module::find($id);
+        if (!$module) {
+            throw new Exception("Модуль $id не найден");
         }
 
         try {
             DB::beginTransaction();
 
-            Student::where('group_id', $group->id)->delete();
+            //Lessons::where('module_id', $module->id)->delete();
 
-            $group->delete();
+            $module->delete();
 
             DB::commit();
         }
@@ -33,6 +33,6 @@ class Delete
             throw $e;
         }
 
-        return Read::trashed((string) $group->id);
+        return Read::trashed((string) $module->id);
     }
 }

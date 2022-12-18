@@ -13,7 +13,7 @@ class CreateExamensTable extends Migration
      */
     public function up()
     {
-        Schema::create('examens', function (Blueprint $table) {
+        Schema::create('exams', function (Blueprint $table) {
             $table->id();
             $table->text('name');
             $table->text('mark');
@@ -31,6 +31,6 @@ class CreateExamensTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('examens');
+        Schema::dropIfExists('exams');
     }
 }

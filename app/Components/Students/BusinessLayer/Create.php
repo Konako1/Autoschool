@@ -19,8 +19,6 @@ class Create
             throw new Exception("Группа $groupId не найдена");
         }
 
-        $data['group_id'] = $groupId;
-
         try {
             DB::beginTransaction();
 

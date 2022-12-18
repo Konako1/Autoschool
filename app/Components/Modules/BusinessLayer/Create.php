@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Components\Groups\BusinessLayer;
+namespace App\Components\Modules\BusinessLayer;
 
-use App\Components\Groups\Models\Group;
+use App\Components\Modules\Models\Module;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
@@ -16,7 +16,7 @@ class Create
         try {
             DB::beginTransaction();
 
-            $group = Group::create($data);
+            $module = Module::create($data);
 
             DB::commit();
         }
@@ -25,6 +25,6 @@ class Create
             throw $e;
         }
 
-        return Read::byId((string) $group->id);
+        return Read::byId((string) $module->id);
     }
 }

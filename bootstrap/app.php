@@ -133,4 +133,46 @@ $app->router->group(
     }
 );
 
+$app->router->group(
+    [],
+    function ($router) {
+        require __DIR__.'/../app/Components/Exams/routes.php';
+    }
+);
+
+$app->router->group(
+    [],
+    function ($router) {
+        require __DIR__.'/../app/Components/Payments/routes.php';
+    }
+);
+
+$app->router->group(
+    [],
+    function ($router) {
+        require __DIR__.'/../app/Components/Modules/routes.php';
+    }
+);
+
+$app->router->group(
+    [],
+    function ($router) {
+        require __DIR__.'/../app/Components/Lessons/routes.php';
+    }
+);
+
+$app->router->group(
+    [],
+    function ($router) {
+        require __DIR__.'/../app/Components/Cars/routes.php';
+    }
+);
+
+$app->router->group(
+    [],
+    function ($router) {
+        require __DIR__.'/../app/Components/Instructors/routes.php';
+    }
+);
+
 return $app;

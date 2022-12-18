@@ -25,7 +25,7 @@ class CreateInstructorsTable extends Migration
             $table->text('certificate');
             $table->text('driver_certificate');
             $table->text('driver_certificate_category');
-            $table->text('car_id');
+            $table->integer('car_id');
             $table->timestamps();
             $table->softDeletes();
         });
