@@ -29,7 +29,7 @@ class Read
                 'car_id',
                 'public.instructors.name AS name',
                 'surname',
-                'middle_name',
+                'patronymic',
                 'photo_path',
                 'phone',
                 'public.cars.name AS car_name',

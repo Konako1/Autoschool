@@ -20,7 +20,7 @@ class Instructor extends Model
         'car_id',
         'name',
         'surname',
-        'middle_name',
+        'patronymic',
         'photo_path',
         'phone',
     ];

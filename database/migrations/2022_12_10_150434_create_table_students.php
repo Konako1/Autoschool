@@ -23,7 +23,7 @@ class CreateTableStudents extends Migration
             $table->double('payment_needed');
             $table->text('name');
             $table->text('surname');
-            $table->text('middle_name');
+            $table->text('patronymic');
             $table->date('birthday');
             $table->text('photo_path');
             $table->text('phone');

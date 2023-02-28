@@ -17,7 +17,7 @@ class CreateInstructorsTable extends Migration
             $table->id();
             $table->text('name');
             $table->text('surname');
-            $table->text('middle_name');
+            $table->text('patronymic');
             $table->text('photo_path');
             $table->text('phone');
             $table->text('job');

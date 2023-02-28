@@ -2,12 +2,15 @@
 
 namespace App\Components\Cars\Models;
 
+use Database\Factories\CarFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Car extends Model
 {
     use SoftDeletes;
+    use HasFactory;
 
     protected $table = 'cars';
 
@@ -17,4 +20,9 @@ class Car extends Model
     ];
 
     protected $dates = ['deleted_at'];
+
+    protected static function newFactory(): CarFactory
+    {
+        return new CarFactory();
+    }
 }

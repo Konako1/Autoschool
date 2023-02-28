@@ -16,7 +16,7 @@ class Student extends Model
         'group_id',
         'name',
         'surname',
-        'middle_name',
+        'patronymic',
         'birthday',
         'photo_path',
         'phone',

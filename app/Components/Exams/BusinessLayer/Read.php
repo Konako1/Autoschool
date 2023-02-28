@@ -29,7 +29,7 @@ class Read
                 'public.students.group_id AS student_group_id',
                 'public.students.name AS student_name',
                 'public.students.surname AS student_surname',
-                'public.students.middle_name AS student_middle_name',
+                'public.students.patronymic AS student_patronymic',
                 'public.students.birthday AS student_birthday',
                 'public.students.photo_path AS student_photo_path',
                 'public.students.phone AS student_phone',
