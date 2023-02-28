@@ -8,23 +8,15 @@
 if (isset($router)) {
     $router->group(
         [
-            'prefix' => '/api',
+            'prefix'    => '/api/students',
             'namespace' => '\App\Components\Students\Controllers'
         ],
         function () use ($router) {
-            $router->get('/students', ['uses' => 'StudentController@getAllRecords']);
-        });
-
-    $router->group(
-        [
-            'prefix' => '/api/groups/{groupId:[0-9]+}/students',
-            'namespace' => '\App\Components\Students\Controllers'
-        ],
-        function () use ($router) {
-            $router->get('/',                   ['uses' => 'StudentController@getAllRecordsByGroup']);
-            $router->get('/{id:[0-9]+}',        ['uses' => 'StudentController@getRecord']);
-            $router->post('',                   ['uses' => 'StudentController@createRecord']);
-            $router->post('/{id:[0-9]+}',       ['uses' => 'StudentController@updateRecord']);
-            $router->delete('/{id:[0-9]+}',     ['uses' => 'StudentController@deleteRecord']);
-        });
+            $router->get('/', ['uses' => 'StudentController@baseGet']);
+            $router->get('/one', ['uses' => 'StudentController@getRecord']);
+            $router->get('/create', ['uses' => 'StudentController@createRecord']);
+            $router->get('/update', ['uses' => 'StudentController@updateRecord']);
+            $router->get('/delete', ['uses' => 'StudentController@deleteRecord']);
+        }
+    );
 }

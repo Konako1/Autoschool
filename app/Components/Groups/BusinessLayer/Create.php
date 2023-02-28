@@ -22,7 +22,7 @@ class Create
         }
         catch (Exception $e) {
             DB::rollBack();
-            throw new Exception('Чето не так пошло');
+            throw $e;
         }
 
         return Read::byId((string) $group->id);

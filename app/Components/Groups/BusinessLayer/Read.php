@@ -20,7 +20,7 @@ class Read
 //                'public.instructors.id'
 //            )
             ->select(
-                'groups.id AS id',
+                'public.groups.id AS id',
                 'name',
                 'studying_start_date',
                 'studying_end_date',

@@ -5,17 +5,19 @@
  * Маршруты бд групп
  */
 
+use App\Components\Groups\Controllers\GroupController;
+
 if (isset($router)) {
     $router->group(
         [
             'prefix' => '/api/groups',
-            'namespace' => 'App\Components\Groups\Controllers',
+            'namespace' => 'App\Components\Groups\Controllers'
         ],
         function () use ($router) {
-            $router->get('/',                   ['uses' => 'GroupController@getAllRecords']);
-            $router->get('/{id:[0-9]+}',        ['uses' => 'GroupController@getRecord']);
-            $router->post('/',                  ['uses' => 'GroupController@createRecord']);
-            $router->post('/{id:[0-9]+}',       ['uses' => 'GroupController@updateRecord']);
-            $router->delete('/{id:[0-9]+}',     ['uses' => 'GroupController@deleteRecord']);
+            $router->get('/',           ['uses' => 'GroupController@baseGet']);
+            $router->get('/one',        ['uses' => 'GroupController@getRecord']);
+            $router->get('/create',    ['uses' => 'GroupController@createRecord']);
+            $router->get('/update',    ['uses' => 'GroupController@updateRecord']);
+            $router->get('/delete',    ['uses' => 'GroupController@deleteRecord']);
         });
 }

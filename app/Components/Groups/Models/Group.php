@@ -11,14 +11,13 @@ class Group extends Model
 
     protected $table = 'groups';
 
-    protected $primaryKey = 'id';
-
     protected $fillable = [
         'name',
         'studying_start_date',
         'studying_end_date',
         'examen_date',
         'instructor_id',
-        'schedule_id',
     ];
+
+    protected $dates = ['deleted_at'];
 }

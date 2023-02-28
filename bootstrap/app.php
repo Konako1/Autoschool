@@ -90,11 +90,6 @@ $app->configure('app');
 |
 */
 
-// ENABLING CORS
-$app->middleware([
-    App\Http\Middleware\CorsMiddleware::class
-]);
-
  //$app->register(App\Providers\AppServiceProvider::class);
  //$app->register(App\Providers\AuthServiceProvider::class);
  $app->register(App\Providers\EventServiceProvider::class);
@@ -110,8 +105,15 @@ $app->middleware([
 |
 */
 
+$app->middleware([
+    App\Http\Middleware\Cors::class // Add this
+
+]);
+
 $app->router->group(
-    [],
+    [
+        'namespace' => 'App\Http\Controllers',
+    ],
     function ($router) {
         require __DIR__.'/../routes/api.php';
     }
@@ -128,6 +130,48 @@ $app->router->group(
     [],
     function ($router) {
         require __DIR__.'/../app/Components/Groups/routes.php';
+    }
+);
+
+$app->router->group(
+    [],
+    function ($router) {
+        require __DIR__.'/../app/Components/Exams/routes.php';
+    }
+);
+
+$app->router->group(
+    [],
+    function ($router) {
+        require __DIR__.'/../app/Components/Payments/routes.php';
+    }
+);
+
+$app->router->group(
+    [],
+    function ($router) {
+        require __DIR__.'/../app/Components/Modules/routes.php';
+    }
+);
+
+$app->router->group(
+    [],
+    function ($router) {
+        require __DIR__.'/../app/Components/Lessons/routes.php';
+    }
+);
+
+$app->router->group(
+    [],
+    function ($router) {
+        require __DIR__.'/../app/Components/Cars/routes.php';
+    }
+);
+
+$app->router->group(
+    [],
+    function ($router) {
+        require __DIR__.'/../app/Components/Instructors/routes.php';
     }
 );
 

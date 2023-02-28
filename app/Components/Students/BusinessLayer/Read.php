@@ -26,7 +26,7 @@ class Read
                 'group_id',
                 'public.students.name AS name',
                 'surname',
-                'middle_name',
+                'patronymic',
                 'birthday',
                 'photo_path',
                 'phone',

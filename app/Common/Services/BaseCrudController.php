@@ -27,7 +27,7 @@ class BaseCrudController
         $filters = $request->has('filter') ? $request->get('filter') : [];
 
         foreach ($filters as $filter => $value) {
-            $params['filters'][$filter] = json_decode($value, true);
+            $params['filter'][$filter] = json_decode($value, true);
         }
 
         $orders = $request->has('orders') ? $request->get('orders') : [];

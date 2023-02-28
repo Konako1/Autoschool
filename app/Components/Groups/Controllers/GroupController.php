@@ -9,20 +9,39 @@ use App\Components\Groups\BusinessLayer\Create;
 use App\Components\Groups\BusinessLayer\Delete;
 use App\Components\Groups\BusinessLayer\Read;
 use App\Components\Groups\BusinessLayer\Update;
+use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
 
 class GroupController extends BaseCrudController
 {
     /**
+     * Фильтрация запроса на получение
+     * @param Request $request
+     *
+     * @return SuccessResourceCollection|Exception
+     */
+    public function baseGet(Request $request)
+    {
+        try {
+            $params = $this->getParams($request);
+            $result = $this->getAllRecords($params);
+        }
+        catch (Exception $e) {
+            $result = $e;
+        }
+
+        return $result;
+    }
+
+    /**
      * Получение списка записей
      * GET /api/groups/
      *
      */
-    public function getAllRecords(Request $request)
+    public function getAllRecords(array $params)
     {
         try {
-            $params     = $this->getParams($request);
             $records    = Read::all($params);
             $total      = Read::count($params);
             $result     = new SuccessResourceCollection($records->toArray(), $total);
@@ -36,13 +55,14 @@ class GroupController extends BaseCrudController
 
     /**
      * Получение записи
-     * GET /api/groups/{id}
+     * GET /api/groups/one?id={id}
      *
      */
-    public function getRecord(string $id)
+    public function getRecord(Request $request)
     {
         try {
-            $records    = Read::byId($id);
+            $params = $request->query();
+            $records    = Read::byId($params['id']);
             $result     = new SuccessResource($records);
         }
         catch (Exception $e) {
@@ -54,14 +74,14 @@ class GroupController extends BaseCrudController
 
     /**
      * Создание одной записи
-     * POST /api/groups/
+     * POST /api/groups/create?name={}&studying_start_date={}&studying_end_date={}&examen_date={}&instructor_id={}
      *
      */
     public function createRecord(Request $request)
     {
         try {
-            $data   = $request->get('data');
-            $record = Create::one($data);
+            $params = $request->query();
+            $record = Create::one($params);
             $result = new SuccessResource($record);
         }
         catch(Exception $e) {
@@ -73,14 +93,14 @@ class GroupController extends BaseCrudController
 
     /**
      * Обновление одной записи
-     * PUT /api/groups/{id}
+     * POST /api/groups/update?id={}&name={}&studying_start_date={}&studying_end_date={}&examen_date={}&instructor_id={}
      *
      */
-    public function updateRecord(Request $request, string $id)
+    public function updateRecord(Request $request)
     {
         try {
-            $data   = $request->get('data');
-            $record = Update::one($data, $id);
+            $params = $request->query();
+            $record = Update::one($params, $params['id']);
             $result = new SuccessResource($record);
         }
         catch(Exception $e) {
@@ -92,13 +112,14 @@ class GroupController extends BaseCrudController
 
     /**
      * Удаление одной записи
-     * DELETE /api/groups/{id}
+     * POST /api/groups/delete?id={}
      *
      */
-    public function deleteRecord(string $id)
+    public function deleteRecord(Request $request)
     {
         try {
-            $record = Delete::one($id);
+            $params = $request->query();
+            $record = Delete::one($params['id']);
             $result = new SuccessResource($record);
         }
         catch(Exception $e) {
