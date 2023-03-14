@@ -2,6 +2,7 @@
 
 namespace App\Components\Instructors\BusinessLayer;
 
+use App\Common\Exceptions\DataBaseException;
 use App\Components\Instructors\Models\Instructor;
 use App\Components\Students\Models\Student;
 use Exception;
@@ -16,7 +17,7 @@ class Delete
     {
         $instructor = Instructor::find($id);
         if (!$instructor) {
-            throw new Exception("Инструктор $id не найден");
+            throw new DataBaseException("Инструктор с id $id не найден");
         }
 
         try {

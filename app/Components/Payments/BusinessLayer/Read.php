@@ -2,6 +2,7 @@
 
 namespace App\Components\Payments\BusinessLayer;
 
+use App\Common\Exceptions\DataBaseException;
 use App\Common\Services\RecordsList;
 use App\Components\Payments\Models\Payment;
 use Exception;
@@ -65,7 +66,7 @@ class Read
 
         // проверка: если запись не найдена
         if (!$record) {
-            throw new Exception("id $id не существует."); //DataBaseException(Error::getMessage(2002, "id", $id));
+            throw new DataBaseException("id $id не существует."); //DataBaseException(Error::getMessage(2002, "id", $id));
         }
 
         return $record->toArray();

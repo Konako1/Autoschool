@@ -2,6 +2,7 @@
 
 namespace App\Components\Instructors\BusinessLayer;
 
+use App\Common\Exceptions\DataBaseException;
 use App\Components\Cars\Models\Car;
 use App\Components\Instructors\Models\Instructor;
 use Exception;
@@ -16,17 +17,17 @@ class Update
     {
         $car = Car::find($carId);
         if (!$car) {
-            throw new Exception("Машина $carId не найдена");
+            throw new DataBaseException("Машина с id $carId не найдена");
         }
 
         $instructor = Instructor::where('car_id', '=', $carId)->first();
         if ($instructor) {
-            throw new Exception("Машина $carId уже занята");
+            throw new DataBaseException("Машина с id $carId уже занята");
         }
 
         $instructor = Instructor::find($id);
         if (!$instructor) {
-            throw new Exception("Инструктор $id не найден");
+            throw new DataBaseException("Инструктор с id $id не найден");
         }
 
         try {

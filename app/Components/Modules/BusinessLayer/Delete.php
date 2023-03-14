@@ -2,6 +2,7 @@
 
 namespace App\Components\Modules\BusinessLayer;
 
+use App\Common\Exceptions\DataBaseException;
 use App\Components\Modules\Models\Module;
 use App\Components\Students\Models\Student;
 use Exception;
@@ -16,7 +17,7 @@ class Delete
     {
         $module = Module::find($id);
         if (!$module) {
-            throw new Exception("Модуль $id не найден");
+            throw new DataBaseException("Модуль с id $id не найден");
         }
 
         try {

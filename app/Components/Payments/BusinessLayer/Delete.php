@@ -2,6 +2,7 @@
 
 namespace App\Components\Payments\BusinessLayer;
 
+use App\Common\Exceptions\DataBaseException;
 use App\Components\Payments\Models\Payment;
 use App\Components\Students\Models\Student;
 use Exception;
@@ -16,12 +17,12 @@ class Delete
     {
         $student = Student::find($studentId);
         if (!$student) {
-            throw new Exception("Студент $studentId не найден");
+            throw new DataBaseException("Студент с id $studentId не найден");
         }
 
         $payment = Payment::find($id);
         if (!$payment) {
-            throw new Exception("Платеж $id не найден");
+            throw new DataBaseException("Платеж с id $id не найден");
         }
 
         try {

@@ -2,6 +2,7 @@
 
 namespace App\Components\Exams\BusinessLayer;
 
+use App\Common\Exceptions\DataBaseException;
 use App\Components\Exams\Models\Exam;
 use App\Components\Students\Models\Student;
 use Exception;
@@ -16,12 +17,12 @@ class Update
     {
         $student = Student::find($studentId);
         if (!$student) {
-            throw new Exception("Студент $studentId не найден");
+            throw new DataBaseException("Студент с id $studentId не найден");
         }
 
         $exam = Exam::find($id);
         if (!$exam) {
-            throw new Exception("Экзамен $id не найдена");
+            throw new DataBaseException("Экзамен с id $id не найдена");
         }
 
         try {

@@ -2,6 +2,9 @@
 
 namespace App\Common\Services;
 
+use App\Common\Enums\ErrorsEnum;
+use App\Common\Resources\ErrorResource;
+use Exception;
 use Illuminate\Http\Request;
 
 class BaseCrudController
@@ -49,5 +52,27 @@ class BaseCrudController
     {
         $data = $request->getContent();
         return json_decode($data, true)['data'];
+    }
+
+    /**
+     * Метод формирует ошибки, анализируя входящий exception
+     *
+     * @param Exception $e - эксепшион
+     * @param string $message - сопровождающее сообщение
+     *
+     * @return ErrorResource
+     */
+    public function errorFromException(Exception $e, string $message): ErrorResource
+    {
+        $error = $e->getMessage();
+        switch ($e->getCode()) {
+            case null:
+                $errors = [ErrorsEnum::getDescription($error)];
+                break;
+            default:
+                $errors = ['error' => $error];
+        }
+
+        return new ErrorResource($errors, $message);
     }
 }

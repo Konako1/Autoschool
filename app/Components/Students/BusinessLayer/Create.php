@@ -2,6 +2,7 @@
 
 namespace App\Components\Students\BusinessLayer;
 
+use App\Common\Exceptions\DataBaseException;
 use App\Components\Groups\Models\Group;
 use App\Components\Students\Models\Student;
 use Exception;
@@ -16,7 +17,7 @@ class Create
     {
         $group = Group::find($groupId);
         if (!$group) {
-            throw new Exception("Группа $groupId не найдена");
+            throw new DataBaseException("Группа с id $groupId не найдена");
         }
 
         try {
@@ -28,7 +29,7 @@ class Create
         }
         catch (Exception $e) {
             DB::rollBack();
-            throw new Exception('Чето не так пошло');
+            throw $e;
         }
 
         return Read::byId($groupId, (string) $student->id);

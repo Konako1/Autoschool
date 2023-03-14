@@ -2,6 +2,7 @@
 
 namespace App\Components\Students\BusinessLayer;
 
+use App\Common\Exceptions\DataBaseException;
 use App\Components\Groups\Models\Group;
 use App\Components\Students\Models\Student;
 use Exception;
@@ -16,12 +17,12 @@ class Delete
     {
         $group = Group::find($groupId);
         if (!$group) {
-            throw new Exception("Группа $groupId не найдена");
+            throw new DataBaseException("Группа с id $groupId не найдена");
         }
 
         $student = Student::where('id', '=', $id, 'and')->where('group_id', '=', $groupId)->first();
         if (!$student) {
-            throw new Exception("Студент $id не найден");
+            throw new DataBaseException("Студент с id $id не найден");
         }
 
         try {
@@ -33,7 +34,7 @@ class Delete
         }
         catch (Exception $e) {
             DB::rollBack();
-            throw new Exception('Чето не так пошло');
+            throw $e;
         }
 
         return Read::trashed($groupId, (string) $student->id);

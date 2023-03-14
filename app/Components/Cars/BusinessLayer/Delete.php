@@ -2,6 +2,7 @@
 
 namespace App\Components\Cars\BusinessLayer;
 
+use App\Common\Exceptions\DataBaseException;
 use App\Components\Cars\Models\Car;
 use App\Components\Students\Models\Student;
 use Exception;
@@ -16,7 +17,7 @@ class Delete
     {
         $car = Car::find($id);
         if (!$car) {
-            throw new Exception("Машина $id не найден");
+            throw new DataBaseException("Машина с id $id не найдена");
         }
 
         try {

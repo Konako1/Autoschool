@@ -9,7 +9,6 @@ use App\Components\Cars\BusinessLayer\Create;
 use App\Components\Cars\BusinessLayer\Delete;
 use App\Components\Cars\BusinessLayer\Read;
 use App\Components\Cars\BusinessLayer\Update;
-use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -28,7 +27,7 @@ class CarController extends BaseCrudController
             $result = $this->getAllRecords($params);
         }
         catch (Exception $e) {
-            $result = $e;
+            $result = $this->errorFromException($e, 'Ошибка получения записей');
         }
 
         return $result;
@@ -47,7 +46,7 @@ class CarController extends BaseCrudController
             $result     = new SuccessResourceCollection($records->toArray(), $total);
         }
         catch (Exception $e) {
-            $result = $e;
+            $result = $this->errorFromException($e, 'Ошибка получения записей');
         }
 
         return $result;
@@ -66,7 +65,7 @@ class CarController extends BaseCrudController
             $result     = new SuccessResource($records);
         }
         catch (Exception $e) {
-            $result = $e;
+            $result = $this->errorFromException($e, 'Ошибка получения записи');
         }
 
         return $result;
@@ -85,7 +84,7 @@ class CarController extends BaseCrudController
             $result = new SuccessResource($record);
         }
         catch(Exception $e) {
-            $result = $e;
+            $result = $this->errorFromException($e, 'Ошибка создания записи');
         }
 
         return $result;
@@ -104,7 +103,7 @@ class CarController extends BaseCrudController
             $result = new SuccessResource($record);
         }
         catch(Exception $e) {
-            $result = $e;
+            $result = $this->errorFromException($e, 'Ошибка обновления записи');
         }
 
         return $result;
@@ -123,7 +122,7 @@ class CarController extends BaseCrudController
             $result = new SuccessResource($record);
         }
         catch(Exception $e) {
-            $result = $e;
+            $result = $this->errorFromException($e, 'Ошибка удаления записи');
         }
 
         return $result;

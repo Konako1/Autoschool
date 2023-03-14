@@ -2,6 +2,7 @@
 
 namespace App\Components\Groups\BusinessLayer;
 
+use App\Common\Exceptions\DataBaseException;
 use App\Components\Groups\Models\Group;
 use App\Components\Students\Models\Student;
 use Exception;
@@ -16,7 +17,7 @@ class Delete
     {
         $group = Group::find($id);
         if (!$group) {
-            throw new Exception("Группа $id не найдена");
+            throw new DataBaseException("Группа с id $id не найдена");
         }
 
         try {

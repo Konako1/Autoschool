@@ -2,6 +2,7 @@
 
 namespace App\Components\Lessons\BusinessLayer;
 
+use App\Common\Exceptions\DataBaseException;
 use App\Components\Groups\Models\Group;
 use App\Components\Lessons\Models\Lesson;
 use App\Components\Modules\Models\Module;
@@ -17,17 +18,17 @@ class Delete
     {
         $student = Module::find($moduleId);
         if (!$student) {
-            throw new Exception("Модуль $moduleId не найден");
+            throw new DataBaseException("Модуль с id $moduleId не найден");
         }
 
         $group = Group::find($groupId);
         if (!$group) {
-            throw new Exception("Группа $groupId не найдена");
+            throw new DataBaseException("Группа с id $groupId не найдена");
         }
 
         $lesson = Lesson::find($id);
         if (!$lesson) {
-            throw new Exception("Занятие $id не найдено");
+            throw new DataBaseException("Занятие с id $id не найдено");
         }
 
         try {

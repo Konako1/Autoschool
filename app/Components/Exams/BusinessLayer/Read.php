@@ -2,6 +2,7 @@
 
 namespace App\Components\Exams\BusinessLayer;
 
+use App\Common\Exceptions\DataBaseException;
 use App\Common\Services\RecordsList;
 use App\Components\Exams\Models\Exam;
 use Exception;
@@ -66,7 +67,7 @@ class Read
 
         // проверка: если запись не найдена
         if (!$record) {
-            throw new Exception("id $id не существует."); //DataBaseException(Error::getMessage(2002, "id", $id));
+            throw new DataBaseException("id $id не существует.");
         }
 
         return $record->toArray();

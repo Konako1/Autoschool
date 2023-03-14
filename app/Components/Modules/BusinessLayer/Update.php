@@ -2,6 +2,7 @@
 
 namespace App\Components\Modules\BusinessLayer;
 
+use App\Common\Exceptions\DataBaseException;
 use App\Components\Modules\Models\Module;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -15,7 +16,7 @@ class Update
     {
         $module = Module::find($id);
         if (!$module) {
-            throw new Exception("Группа $id не найдена");
+            throw new DataBaseException("Группа с id $id не найдена");
         }
 
         try {
