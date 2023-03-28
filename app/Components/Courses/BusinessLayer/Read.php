@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Components\Instructors\BusinessLayer;
+namespace App\Components\Courses\BusinessLayer;
 
 use App\Common\Exceptions\DataBaseException;
 use App\Common\Services\RecordsList;
-use App\Components\Instructors\Models\Instructor;
+use App\Components\Courses\Models\Course;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
@@ -13,29 +13,12 @@ class Read
 {
     private static function getBaseQuery(): Builder
     {
-        return Instructor::query()
-            ->leftJoin(
-                'public.cars',
-                'public.instructors.car_id',
-                '=',
-                'public.cars.id'
-            )
+        return Course::query()
             ->select(
-                'public.instructors.id AS id',
-                'job',
-                'education',
-                'certificate',
-                'driver_certificate',
-                'driver_certificate_category',
-                'car_id',
-                'is_practician',
-                'public.instructors.name AS name',
-                'surname',
-                'patronymic',
-                'photo_path',
-                'phone',
-                'public.cars.name AS car_name',
-                'public.cars.reg_number AS car_reg_number',
+                'id',
+                'name',
+                'category',
+                'price',
             );
     }
 
@@ -54,7 +37,7 @@ class Read
 
         // проверка: если запись не найдена
         if (!$record) {
-            throw new DataBaseException("id $id не существует."); //DataBaseException(Error::getMessage(2002, "id", $id));
+            throw new DataBaseException("id $id не существует.");
         }
 
         return $record->toArray();
@@ -91,7 +74,7 @@ class Read
      *
      * @return array
      */
-    public static function trashed(string $id): array
+    public static function trashed( string $id): array
     {
         return self::getBaseQuery()
             ->withTrashed()

@@ -21,22 +21,41 @@ class Read
                 '=',
                 'public.groups.id'
             )
+            ->leftJoin(
+                'public.instructors',
+                'public.students.instructor_id',
+                '=',
+                'public.instructors.id'
+            )
             ->select(
                 'public.students.id AS id',
                 'payment_needed',
                 'group_id',
                 'public.students.name AS name',
-                'surname',
-                'patronymic',
+                'public.students.surname AS surname',
+                'public.students.patronymic AS patronymic',
                 'birthday',
-                'photo_path',
-                'phone',
+                'public.students.photo_path AS photo_path',
+                'public.students.phone AS phone',
                 'address',
                 'public.groups.name AS group_name',
                 'studying_start_date',
                 'studying_end_date',
                 'examen_date',
-                'instructor_id',
+                'gearbox_type',
+                'public.groups.instructor_id AS lecture_instructor_id',
+                'public.instructors.job AS instructor_job',
+                'public.instructors.education AS instructor_education',
+                'public.instructors.certificate AS instructor_certificate',
+                'public.instructors.driver_certificate AS instructor_driver_certificate',
+                'public.instructors.driver_certificate_category AS instructor_driver_certificate_category',
+                'public.instructors.car_id AS instructor_car_id',
+                'public.instructors.name AS instructor_name',
+                'public.instructors.surname AS instructor_surname',
+                'public.instructors.patronymic AS instructor_patronymic',
+                'public.instructors.photo_path AS instructor_photo_path',
+                'public.instructors.phone AS instructor_phone',
+                'public.instructors.is_practician AS instructor_is_practician'
             );
     }
 

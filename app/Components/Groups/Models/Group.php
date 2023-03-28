@@ -17,6 +17,7 @@ class Group extends Model
         'studying_end_date',
         'examen_date',
         'instructor_id',
+        'course_id',
     ];
 
     protected $dates = ['deleted_at'];

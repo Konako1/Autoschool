@@ -23,6 +23,7 @@ class Instructor extends Model
         'patronymic',
         'photo_path',
         'phone',
+        'is_practician'
     ];
 
     protected $dates = ['deleted_at'];

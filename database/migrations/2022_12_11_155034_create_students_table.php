@@ -20,6 +20,7 @@ class CreateStudentsTable extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->integer('group_id');
+            $table->integer('instructor_id');
             $table->double('payment_needed');
             $table->text('name');
             $table->text('surname');
@@ -28,6 +29,7 @@ class CreateStudentsTable extends Migration
             $table->text('photo_path');
             $table->text('phone');
             $table->text('address');
+            $table->text('gearbox_type');
             $table->timestamps();
             $table->softDeletes();
         });

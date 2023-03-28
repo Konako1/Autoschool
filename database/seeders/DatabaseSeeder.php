@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             CarsSeeder::class,
             InstructorsSeeder::class,
             ModulesSeeder::class,
+            CoursesSeeder::class,
             GroupsSeeder::class,
             LessonsSeeder::class,
             StudentsSeeder::class,

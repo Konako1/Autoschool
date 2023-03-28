@@ -13,21 +13,26 @@ class Update
     /**
      * @throws Exception
      */
-    public static function one(array $data, string $id, string $carId): array
+    public static function one(array $data, string $id, string $carId, string $is_practician): array
     {
-        $car = Car::find($carId);
-        if (!$car) {
-            throw new DataBaseException("Машина с id $carId не найдена");
-        }
-
-        $instructor = Instructor::where('car_id', '=', $carId)->first();
-        if ($instructor) {
-            throw new DataBaseException("Машина с id $carId уже занята");
-        }
-
         $instructor = Instructor::find($id);
         if (!$instructor) {
             throw new DataBaseException("Инструктор с id $id не найден");
+        }
+
+        // у лекторов не может быть машины тк они не занимаются вождением
+        if ($is_practician) {
+            $car = Car::find($carId);
+            if (!$car) {
+                throw new DataBaseException("Машина с id $carId не найдена");
+            }
+            $instructorWithCar = Instructor::where('car_id', '=', $carId)->first();
+            if ($instructorWithCar) {
+                throw new DataBaseException("Машина с id $carId уже занята");
+            }
+        }
+        else {
+            $data['car_id'] = null;
         }
 
         try {

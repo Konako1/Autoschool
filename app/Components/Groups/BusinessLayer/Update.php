@@ -3,7 +3,10 @@
 namespace App\Components\Groups\BusinessLayer;
 
 use App\Common\Exceptions\DataBaseException;
+use App\Common\Exceptions\KnownException;
+use App\Components\Courses\Models\Course;
 use App\Components\Groups\Models\Group;
+use App\Components\Instructors\Models\Instructor;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
@@ -12,11 +15,21 @@ class Update
     /**
      * @throws Exception
      */
-    public static function one(array $data, string $id): array
+    public static function one(array $data, string $id, string $course_id, string $instructor_id): array
     {
         $group = Group::find($id);
         if (!$group) {
             throw new DataBaseException("Группа с id $id не найдена");
+        }
+
+        $instructor = Instructor::find($instructor_id);
+        if ($instructor->is_practician) {
+            throw new KnownException('Инструктором в группе не может быть практик');
+        }
+
+        $course = Course::find($course_id);
+        if (!$course) {
+            throw new DataBaseException("Курс с id $course_id не найден");
         }
 
         try {

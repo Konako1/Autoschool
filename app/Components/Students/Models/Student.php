@@ -14,6 +14,7 @@ class Student extends Model
     protected $fillable = [
         'payment_needed',
         'group_id',
+        'instructor_id',
         'name',
         'surname',
         'patronymic',
@@ -21,6 +22,7 @@ class Student extends Model
         'photo_path',
         'phone',
         'address',
+        'gearbox_type',
     ];
 
     protected $dates = ['deleted_at'];

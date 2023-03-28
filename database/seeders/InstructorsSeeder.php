@@ -24,6 +24,7 @@ class InstructorsSeeder extends Seeder
             'patronymic'                    => 'Павлович',
             'photo_path'                    => 'photo1',
             'phone'                         => '89504838737',
+            'is_practician'                 => true,
         ]);
 
         Instructor::create([
@@ -38,6 +39,7 @@ class InstructorsSeeder extends Seeder
             'patronymic'                    => 'Какойтотамович',
             'photo_path'                    => 'photo2',
             'phone'                         => '89263748923',
+            'is_practician'                 => true,
         ]);
 
         Instructor::create([
@@ -52,6 +54,7 @@ class InstructorsSeeder extends Seeder
             'patronymic'                    => 'Какойтотамович',
             'photo_path'                    => 'photo3',
             'phone'                         => '89736458254',
+            'is_practician'                 => false,
         ]);
     }
 }
