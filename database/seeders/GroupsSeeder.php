@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Common\Helpers\GroupHelper;
 use App\Components\Courses\Models\Course;
 use App\Components\Groups\Models\Group;
 use App\Components\Instructors\Models\Instructor;
@@ -14,30 +15,34 @@ class GroupsSeeder extends Seeder
         $instructors = Instructor::where('is_practician', '=', false)->get();
         $courses = Course::all();
 
+        $course = $courses->random();
         Group::create([
-            'name'                  => 'A-01',
+            'name'                  => GroupHelper::GenerateGroupName($course->category),
             'studying_start_date'   => '2022-02-01',
             'studying_end_date'     => '2022-06-25',
             'examen_date'           => '2022-06-26',
             'instructor_id'         => $instructors->random()->id,
-            'course_id'             => $courses->random()->id,
+            'course_id'             => $course->id,
         ]);
 
+        $course = $courses->random();
         Group::create([
-            'name'                  => 'A-02',
+            'name'                  => GroupHelper::GenerateGroupName($course->category),
             'studying_start_date'   => '2022-02-01',
             'studying_end_date'     => '2022-06-25',
             'examen_date'           => '2022-06-26',
             'instructor_id'         => $instructors->random()->id,
-            'course_id'             => $courses->random()->id,
+            'course_id'             => $course->id,
         ]);
+
+        $course = $courses->random();
         Group::create([
-            'name'                  => 'B-01',
+            'name'                  => GroupHelper::GenerateGroupName($course->category),
             'studying_start_date'   => '2022-02-01',
             'studying_end_date'     => '2022-06-25',
             'examen_date'           => '2022-06-26',
             'instructor_id'         => $instructors->random()->id,
-            'course_id'             => $courses->random()->id,
+            'course_id'             => $course->id,
         ]);
     }
 }

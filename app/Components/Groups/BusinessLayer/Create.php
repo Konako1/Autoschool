@@ -4,6 +4,7 @@ namespace App\Components\Groups\BusinessLayer;
 
 use App\Common\Exceptions\DataBaseException;
 use App\Common\Exceptions\KnownException;
+use App\Common\Helpers\GroupHelper;
 use App\Components\Courses\Models\Course;
 use App\Components\Groups\Models\Group;
 use App\Components\Instructors\Models\Instructor;
@@ -26,6 +27,8 @@ class Create
         if (!$course) {
             throw new DataBaseException("Курс с id $course_id не найден");
         }
+
+        $data['name'] = GroupHelper::GenerateGroupName($course->category);
 
         try {
             DB::beginTransaction();
