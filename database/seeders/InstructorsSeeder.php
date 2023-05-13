@@ -48,7 +48,6 @@ class InstructorsSeeder extends Seeder
             'certificate'                   => 'ЗС-34 № 1234 от 23.11.2016',
             'driver_certificate'            => '72 ТМ № 036487',
             'driver_certificate_category'   => 'A',
-            'car_id'                        => $cars->random()->id,
             'name'                          => 'Топычканов',
             'surname'                       => 'Денис',
             'patronymic'                    => 'Какойтотамович',

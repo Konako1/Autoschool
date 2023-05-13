@@ -14,11 +14,20 @@ class Read
     private static function getBaseQuery(): Builder
     {
         return Course::query()
+            ->leftJoin(
+                'public.course_modules',
+                'public.courses.id',
+                '=',
+                'public.course_modules.course_id'
+            )
             ->select(
-                'id',
+                'courses.id as id',
                 'name',
                 'category',
-                'price',
+                'price'
+            )
+            ->with(
+                'modules'
             );
     }
 

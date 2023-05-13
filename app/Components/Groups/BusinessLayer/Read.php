@@ -15,12 +15,6 @@ class Read
     {
         return Group::query()
             ->leftJoin(
-                'public.instructors',
-                'public.groups.instructor_id',
-                '=',
-                'public.instructors.id'
-            )
-            ->leftJoin(
                 'public.courses',
                 'public.groups.course_id',
                 '=',
@@ -32,19 +26,6 @@ class Read
                 'studying_start_date',
                 'studying_end_date',
                 'examen_date',
-                'instructor_id',
-                'public.instructors.job AS instructor_job',
-                'public.instructors.education AS instructor_education',
-                'public.instructors.certificate AS instructor_certificate',
-                'public.instructors.driver_certificate AS instructor_driver_certificate',
-                'public.instructors.driver_certificate_category AS instructor_driver_certificate_category',
-                'public.instructors.car_id AS instructor_car_id',
-                'public.instructors.name AS instructor_name',
-                'public.instructors.surname AS instructor_surname',
-                'public.instructors.patronymic AS instructor_patronymic',
-                'public.instructors.photo_path AS instructor_photo_path',
-                'public.instructors.phone AS instructor_phone',
-                'public.instructors.is_practician AS instructor_is_practician',
                 'course_id',
                 'public.courses.name AS course_name',
                 'public.courses.category AS course_category',

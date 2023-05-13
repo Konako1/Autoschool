@@ -81,7 +81,7 @@ class ModuleController extends BaseCrudController
     {
         try {
             $params = $request->query();
-            $record = Create::one($params);
+            $record = Create::one($params, $params['instructor_id']);
             $result = new SuccessResource($record);
         }
         catch(Exception $e) {
@@ -100,7 +100,7 @@ class ModuleController extends BaseCrudController
     {
         try {
             $params = $request->query();
-            $record = Update::one($params, $params['id']);
+            $record = Update::one($params, $params['id'], $params['instructor_id']);
             $result = new SuccessResource($record);
         }
         catch(Exception $e) {

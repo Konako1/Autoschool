@@ -2,6 +2,7 @@
 
 namespace App\Components\Courses\Models;
 
+use App\Components\Modules\Models\Module;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -16,6 +17,11 @@ class Course extends Model
         'category',
         'price',
     ];
+
+    public function modules()
+    {
+        return $this->belongsToMany(Module::class);
+    }
 
     protected $dates = ['deleted_at'];
 }

@@ -1,20 +1,19 @@
 <?php
 
-namespace App\Components\Modules\Models;
+namespace App\Components\Courses\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Module extends Model
+class CourseModule extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'modules';
+    protected $table = 'course_module';
 
     protected $fillable = [
-        'instructor_id',
-        'name',
-        'description',
+        'course_id',
+        'module_id'
     ];
 
     protected $dates = ['deleted_at'];
