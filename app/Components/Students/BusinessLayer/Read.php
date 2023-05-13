@@ -57,7 +57,11 @@ class Read
                 'public.instructors.photo_path AS instructor_photo_path',
                 'public.instructors.phone AS instructor_phone',
                 'public.instructors.is_practician AS instructor_is_practician'
+            )
+            ->with(
+                'payments'
             );
+
     }
 
     /**
