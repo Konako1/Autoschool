@@ -39,7 +39,6 @@ class Read
                 'address',
                 'group_id',
                 'public.groups.name AS group_name',
-                'public.groups.instructor_id AS lecture_instructor_id',
                 'studying_start_date',
                 'studying_end_date',
                 'examen_date',

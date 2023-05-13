@@ -81,7 +81,7 @@ class GroupController extends BaseCrudController
     {
         try {
             $params = $request->query();
-            $record = Create::one($params, $params['course_id'], $params['instructor_id']);
+            $record = Create::one($params, $params['course_id']);
             $result = new SuccessResource($record);
         }
         catch(Exception $e) {
@@ -100,7 +100,7 @@ class GroupController extends BaseCrudController
     {
         try {
             $params = $request->query();
-            $record = Update::one($params, $params['id'], $params['course_id'], $params['instructor_id']);
+            $record = Update::one($params, $params['id'], $params['course_id']);
             $result = new SuccessResource($record);
         }
         catch(Exception $e) {

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateModulesTable extends Migration
+class CreateCourseModulesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,14 @@ class CreateModulesTable extends Migration
      */
     public function up()
     {
-        Schema::create('modules', function (Blueprint $table) {
+        if (Schema::hasTable('course_module')) {
+            return;
+        }
+
+        Schema::create('course_module', function (Blueprint $table) {
             $table->id();
-            $table->integer('instructor_id');
-            $table->text('name');
-            $table->text('description');
+            $table->integer('course_id');
+            $table->integer('module_id');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -30,6 +33,6 @@ class CreateModulesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('modules');
+        Schema::dropIfExists('course_module');
     }
 }

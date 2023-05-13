@@ -4,6 +4,7 @@ namespace App\Components\Courses\BusinessLayer;
 
 use App\Common\Exceptions\DataBaseException;
 use App\Components\Courses\Models\Course;
+use App\Components\Courses\Models\CourseModule;
 use App\Components\Students\Models\Student;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -15,17 +16,17 @@ class Delete
      */
     public static function one(string $id): array
     {
-        $group = Course::find($id);
-        if (!$group) {
-            throw new DataBaseException("Группа с id $id не найдена");
+        $course = Course::find($id);
+        if (!$course) {
+            throw new DataBaseException("Курс с id $id не найден");
         }
 
         try {
             DB::beginTransaction();
 
-            Student::where('group_id', $group->id)->delete();
+            $course->delete();
 
-            $group->delete();
+            CourseModule::where('course_id', '=', $id)->delete();
 
             DB::commit();
         }
@@ -34,6 +35,6 @@ class Delete
             throw $e;
         }
 
-        return Read::trashed((string) $group->id);
+        return Read::trashed((string) $course->id);
     }
 }

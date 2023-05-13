@@ -15,16 +15,11 @@ class Update
     /**
      * @throws Exception
      */
-    public static function one(array $data, string $id, string $course_id, string $instructor_id): array
+    public static function one(array $data, string $id, string $course_id): array
     {
         $group = Group::find($id);
         if (!$group) {
             throw new DataBaseException("Группа с id $id не найдена");
-        }
-
-        $instructor = Instructor::find($instructor_id);
-        if ($instructor->is_practician) {
-            throw new KnownException('Инструктором в группе не может быть практик');
         }
 
         $course = Course::find($course_id);
