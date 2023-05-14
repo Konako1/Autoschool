@@ -19,7 +19,6 @@ class StudentsSeeder extends Seeder
 
         for ($i = 0; $i < 100; $i++) {
             Student::create([
-                'payment_needed'    => doubleval($faker->numerify('#####.##')),
                 'group_id'          => $groups->random()->id,
                 'name'              => $faker->name,
                 'surname'           => $faker->lastName,
