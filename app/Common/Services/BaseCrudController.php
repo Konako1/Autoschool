@@ -6,6 +6,7 @@ use App\Common\Enums\ErrorsEnum;
 use App\Common\Resources\ErrorResource;
 use Exception;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class BaseCrudController
 {
@@ -74,5 +75,19 @@ class BaseCrudController
         }
 
         return new ErrorResource($errors, $message);
+    }
+
+    /**
+     * Метод формирует ответ в виде файла, который скачает браузер
+     *
+     * @param $document
+     * @return BinaryFileResponse
+     */
+    public function downloadFile($document): BinaryFileResponse
+    {
+        $headers = [
+            'Content-Type' => 'application/docx',
+        ];
+        return response()->download($document->path, $document->name, $headers);
     }
 }
