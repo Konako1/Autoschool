@@ -3,6 +3,7 @@
 namespace App\Components\Students\Models;
 
 use App\Components\Exams\Models\Exam;
+use App\Components\Groups\Models\Group;
 use App\Components\Instructors\Models\Instructor;
 use App\Components\Payments\Models\Payment;
 use Illuminate\Database\Eloquent\Model;
@@ -33,6 +34,10 @@ class Student extends Model
 
     public function instructor() {
         return $this->hasMany(Instructor::class, 'id', 'instructor_id')->first();
+    }
+
+    public function group() {
+        return $this->hasOne(Group::class, 'id', 'group_id')->first();
     }
 
     public function exams() {
