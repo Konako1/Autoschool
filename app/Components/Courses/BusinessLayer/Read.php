@@ -15,10 +15,10 @@ class Read
     {
         return Course::query()
             ->leftJoin(
-                'public.course_modules',
+                'public.course_module',
                 'public.courses.id',
                 '=',
-                'public.course_modules.course_id'
+                'public.course_module.course_id'
             )
             ->select(
                 'courses.id as id',
