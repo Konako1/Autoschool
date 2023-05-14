@@ -24,7 +24,7 @@ class PaymentController extends BaseCrudController
     {
         try {
             $params = $this->getParams($request);
-            if (isset($params['filter']['student']))
+            if (isset($params['filter']['student_id']))
                 $result = $this->getAllRecordsByStudent($params);
             else
                 $result = $this->getAllRecords($params);
@@ -63,7 +63,7 @@ class PaymentController extends BaseCrudController
     public function getAllRecordsByStudent(array $params)
     {
         try {
-            $records    = Read::allByStudentId($params['filter']['student'], $params);
+            $records    = Read::allByStudentId($params['filter']['student_id'], $params);
             $total      = Read::count($params);
             $result     = new SuccessResourceCollection($records->toArray(), $total);
         }
@@ -83,7 +83,7 @@ class PaymentController extends BaseCrudController
     {
         try {
             $params = $request->query();
-            $records    = Read::byId($params['student'], $params['id']);
+            $records    = Read::byId($params['student_id'], $params['id']);
             $result     = new SuccessResource($records);
         }
         catch (Exception $e) {
