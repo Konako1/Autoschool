@@ -25,7 +25,6 @@ class Read
                 'value',
                 'date',
                 'student_id',
-                'public.students.payment_needed AS student_payment_needed',
                 'public.students.group_id AS student_group_id',
                 'public.students.name AS student_name',
                 'public.students.surname AS student_surname',
