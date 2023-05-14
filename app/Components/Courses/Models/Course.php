@@ -20,7 +20,7 @@ class Course extends Model
 
     public function modules()
     {
-        return $this->belongsToMany(Module::class)->get();
+        return $this->belongsToMany(Module::class);
     }
 
     protected $dates = ['deleted_at'];

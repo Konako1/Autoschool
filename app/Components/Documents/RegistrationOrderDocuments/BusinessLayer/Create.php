@@ -13,7 +13,7 @@ class Create
     {
         $group = Group::find($groupId);
         $course = $group->course();
-        $modules = $course->modules();
+        $modules = $course->modules()->get();
         $students = $group->students();
 
         $modulesArr = [];
