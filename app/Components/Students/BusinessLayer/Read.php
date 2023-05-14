@@ -3,7 +3,6 @@
 namespace App\Components\Students\BusinessLayer;
 
 use App\Common\Exceptions\DataBaseException;
-use App\Common\Services\FSOPQuery;
 use App\Common\Services\RecordsList;
 use App\Components\Students\Models\Student;
 use Exception;
@@ -27,9 +26,14 @@ class Read
                 '=',
                 'public.instructors.id'
             )
+            ->leftJoin(
+                'public.courses',
+                'public.groups.course_id',
+                '=',
+                'public.courses.id'
+            )
             ->select(
                 'public.students.id AS id',
-                'payment_needed',
                 'public.students.name AS name',
                 'public.students.surname AS surname',
                 'public.students.patronymic AS patronymic',
@@ -37,12 +41,16 @@ class Read
                 'public.students.photo_path AS photo_path',
                 'public.students.phone AS phone',
                 'address',
+                'gearbox_type',
                 'group_id',
                 'public.groups.name AS group_name',
-                'studying_start_date',
-                'studying_end_date',
-                'examen_date',
-                'gearbox_type',
+                'public.groups.studying_start_date as group_studying_start_date',
+                'public.groups.studying_end_date as group_studying_end_date',
+                'public.groups.examen_date as group_examen_date',
+                'course_id',
+                'public.courses.name as course_name',
+                'public.courses.category as course_category',
+                'public.courses.price as course_price',
                 'public.instructors.id AS instructor_id',
                 'public.instructors.job AS instructor_job',
                 'public.instructors.education AS instructor_education',
