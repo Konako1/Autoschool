@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Components\Documents\ServiceDeliveryActDocuments\Controllers;
+namespace App\Components\Documents\DriverExamCardDocuments\Controllers;
 
 use App\Common\Services\BaseCrudController;
-use App\Components\Documents\ServiceDeliveryActDocuments\BusinessLayer\Create;
+use App\Components\Documents\DriverExamCardDocuments\BusinessLayer\Create;
 use Exception;
 use Illuminate\Http\Request;
 
-class ServiceDeliveryActDocumentController extends BaseCrudController
+class DriverExamCardDocumentController extends BaseCrudController
 {
     /**
      * Создание одной записи
-     * POST /api/documents/service-delivery-act/create?...
+     * POST /api/documents/driver-exam-card/create?...
      *
      */
     public function createRecord(Request $request)
