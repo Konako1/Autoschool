@@ -36,7 +36,6 @@ class Read
                 'public.groups.studying_start_date AS group_studying_start_date',
                 'public.groups.studying_end_date AS group_studying_end_date',
                 'public.groups.examen_date AS group_examen_date',
-                'public.groups.instructor_id AS group_instructor_id',
                 'public.modules.name AS module_name',
                 'public.modules.description AS module_description',
             );
