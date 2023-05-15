@@ -33,7 +33,7 @@ class Student extends Model
     }
 
     public function instructor() {
-        return $this->hasMany(Instructor::class, 'id', 'instructor_id')->first();
+        return $this->hasOne(Instructor::class, 'id', 'instructor_id')->first();
     }
 
     public function group() {

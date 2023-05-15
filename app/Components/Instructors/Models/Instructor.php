@@ -2,6 +2,7 @@
 
 namespace App\Components\Instructors\Models;
 
+use App\Components\Cars\Models\Car;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -25,6 +26,10 @@ class Instructor extends Model
         'phone',
         'is_practician'
     ];
+
+    public function car() {
+        return $this->hasOne(Car::class, 'id', 'car_id')->first();
+    }
 
     protected $dates = ['deleted_at'];
 }
