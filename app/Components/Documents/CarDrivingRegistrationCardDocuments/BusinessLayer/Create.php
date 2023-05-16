@@ -3,6 +3,7 @@
 namespace App\Components\Documents\CarDrivingRegistrationCardDocuments\BusinessLayer;
 
 use App\Common\DocxTemplateEngine\Templates\CarDrivingRegistrationCardTemplateEngine;
+use App\Common\Helpers\DateFormatter;
 use App\Components\Documents\CarDrivingRegistrationCardDocuments\Models\CarDrivingRegistrationCardDocument;
 use App\Components\Students\Models\Student;
 
@@ -24,8 +25,8 @@ class Create
                 'instructor_fio' => "$instructor->surname $name_char. $patronymic_char.",
                 'group' => [
                     'name' => $group->name,
-                    'studying_start_date' => $group->studying_start_date,
-                    'studying_end_date' => $group->studying_end_date,
+                    'studying_start_date' => DateFormatter::stringFormat($group->studying_start_date),
+                    'studying_end_date' => DateFormatter::stringFormat($group->studying_end_date),
                 ],
                 'student' => [
                     'name' => $student->name,

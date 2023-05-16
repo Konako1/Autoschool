@@ -3,6 +3,7 @@
 namespace App\Components\Documents\DriverExamCardDocuments\BusinessLayer;
 
 use App\Common\DocxTemplateEngine\Templates\DriverExamCardTemplateEngine;
+use App\Common\Helpers\DateFormatter;
 use App\Components\Documents\DriverExamCardDocuments\Models\DriverExamCardDocument;
 use App\Components\Students\Models\Student;
 use Carbon\Carbon;
@@ -24,7 +25,7 @@ class Create
                     'surname' => $student->surname,
                     'name' => $student->name,
                     'patronymic' => $student->patronymic,
-                    'birthday' => $student->birthday,
+                    'birthday' => DateFormatter::stringFormat($student->birthday),
                     'address' => $student->address,
                 ],
             ]
