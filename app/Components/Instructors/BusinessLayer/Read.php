@@ -36,6 +36,9 @@ class Read
                 'phone',
                 'public.cars.name AS car_name',
                 'public.cars.reg_number AS car_reg_number',
+            )
+            ->orderByDesc(
+                'public.instructors.updated_at'
             );
     }
 

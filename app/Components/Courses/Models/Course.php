@@ -20,7 +20,7 @@ class Course extends Model
 
     public function modules()
     {
-        return $this->belongsToMany(Module::class);
+        return $this->belongsToMany(Module::class)->where('course_module.deleted_at', '=', null);
     }
 
     protected $dates = ['deleted_at'];

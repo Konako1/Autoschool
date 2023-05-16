@@ -18,6 +18,9 @@ class Read
                 'id',
                 'name',
                 'reg_number',
+            )
+            ->orderByDesc(
+                'updated_at'
             );
     }
 

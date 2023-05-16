@@ -24,7 +24,7 @@ class Update
         }
 
         $modulesId = $data['modules'];
-        $modules = array();
+        $modules = [];
 
         try {
             DB::beginTransaction();
