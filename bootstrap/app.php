@@ -231,5 +231,25 @@ $app->router->group(
     }
 );
 
+$app->router->group(
+    [],
+    function ($router) {
+        require __DIR__.'/../app/Components/Documents/DriverLicenseApplicationDocuments/routes.php';
+    }
+);
+
+$app->router->group(
+    [],
+    function ($router) {
+        require __DIR__.'/../app/Components/Documents/ScheduleDocuments/routes.php';
+    }
+);
+
+$app->router->group(
+    [],
+    function ($router) {
+        require __DIR__.'/../app/Components/Documents/ExamProtocolDocuments/routes.php';
+    }
+);
 
 return $app;

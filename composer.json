@@ -8,7 +8,8 @@
         "php": "7.3.*",
         "ext-json": "*",
         "bingo-soft/phpdocxtemplate": "^1.3",
-        "laravel/lumen-framework": "8.x-dev"
+        "laravel/lumen-framework": "8.x-dev",
+      "ext-intl": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
