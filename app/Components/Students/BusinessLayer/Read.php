@@ -67,6 +67,9 @@ class Read
             )
             ->with(
                 'payments'
+            )
+            ->orderByDesc(
+                'public.students.updated_at'
             );
 
     }

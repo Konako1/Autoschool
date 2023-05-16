@@ -33,6 +33,9 @@ class Read
                 'public.students.photo_path AS student_photo_path',
                 'public.students.phone AS student_phone',
                 'public.students.address AS student_address',
+            )
+            ->orderByDesc(
+                'public.payments.updated_at'
             );
     }
 

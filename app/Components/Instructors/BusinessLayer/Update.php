@@ -27,7 +27,7 @@ class Update
                 throw new DataBaseException("Машина с id $carId не найдена");
             }
             $instructorWithCar = Instructor::where('car_id', '=', $carId)->first();
-            if ($instructorWithCar) {
+            if ($instructorWithCar && $instructorWithCar->id != $instructor->id) {
                 throw new DataBaseException("Машина с id $carId уже занята");
             }
         }

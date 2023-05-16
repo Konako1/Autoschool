@@ -22,6 +22,9 @@ class Read
             )
             ->with(
                 'modules'
+            )
+            ->orderByDesc(
+                'public.courses.updated_at'
             );
     }
 
