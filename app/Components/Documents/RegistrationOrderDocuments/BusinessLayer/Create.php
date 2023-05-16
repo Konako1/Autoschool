@@ -3,6 +3,7 @@
 namespace App\Components\Documents\RegistrationOrderDocuments\BusinessLayer;
 
 use App\Common\DocxTemplateEngine\Templates\RegistrationOrderTemplateEngine;
+use App\Common\Helpers\DateFormatter;
 use App\Components\Documents\RegistrationOrderDocuments\Models\RegistrationOrderDocument;
 use App\Components\Groups\Models\Group;
 use Carbon\Carbon;
@@ -50,25 +51,25 @@ class Create
             $studentsArr[] = [
                 'number' => $key + 1,
                 'fio' => "$student->surname $student->name $student->patronymic",
-                'birthday' => $student->birthday,
+                'birthday' => DateFormatter::stringFormat($student->birthday),
                 'address' => $student->address,
             ];
         }
 
         $data = [
             'data' => [
-                'date_today' => Carbon::now()->toDateString(),
+                'date_today' => DateFormatter::format(Carbon::now()),
                 'group' => [
                     'number' => $group->name,
                     'category' => $course->category,
-                    'studying_start_date' => $group->studying_start_date,
-                    'studying_end_date' => $group->studying_end_date,
+                    'studying_start_date' => DateFormatter::stringFormat($group->studying_start_date),
+                    'studying_end_date' => DateFormatter::stringFormat($group->studying_end_date),
                 ],
                 'modules' => $modulesArr,
                 'instructors' => $instructorsArr,
                 'students' => $studentsArr,
                 'exam' => [
-                    'date' => $group->examen_date,
+                    'date' => DateFormatter::stringFormat($group->examen_date),
                     'student_count' => count($students),
                 ]
             ]

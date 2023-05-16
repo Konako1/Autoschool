@@ -3,6 +3,7 @@
 namespace App\Components\Documents\ExamResultsDocuments\BusinessLayer;
 
 use App\Common\DocxTemplateEngine\Templates\ExamResultsTemplateEngine;
+use App\Common\Helpers\DateFormatter;
 use App\Components\Documents\ExamResultsDocuments\Models\ExamResultsDocument;
 use App\Components\Groups\Models\Group;
 use Carbon\Carbon;
@@ -16,7 +17,7 @@ class Create
 
         $data = [
             'data' => [
-                'date_today' => Carbon::now()->toDateString(),
+                'date_today' => DateFormatter::format(Carbon::now()),
                 'group' => [
                     'name' => $group->name,
                     'course_category' => $course->category,

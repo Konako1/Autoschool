@@ -3,6 +3,7 @@
 namespace App\Components\Documents\ServiceDeliveryActDocuments\BusinessLayer;
 
 use App\Common\DocxTemplateEngine\Templates\ServiceDeliveryActTemplateEngine;
+use App\Common\Helpers\DateFormatter;
 use App\Components\Documents\ServiceDeliveryActDocuments\Models\ServiceDeliveryActDocument;
 use App\Components\Students\Models\Student;
 
@@ -28,7 +29,7 @@ class Create
 
         $data = [
             'data' => [
-                'from_date' => $group->studying_end_date,
+                'from_date' => DateFormatter::stringFormat($group->studying_end_date),
                 'courses_sum' => $coursePrice,
                 'courses' => $coursesArr,
                 'student' => [

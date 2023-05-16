@@ -3,6 +3,7 @@
 namespace App\Components\Groups\Models;
 
 use App\Components\Courses\Models\Course;
+use App\Components\Lessons\Models\Lesson;
 use App\Components\Students\Models\Student;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -27,6 +28,10 @@ class Group extends Model
 
     public function students() {
         return $this->hasMany(Student::class, 'group_id', 'id')->get();
+    }
+
+    public function lessons() {
+        return $this->hasMany(Lesson::class, 'group_id', 'id')->get();
     }
 
     protected $dates = ['deleted_at'];
