@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Маршруты акта о выполнении услуги (документ)
+ * Маршруты приказа на регистрацию (документ)
  */
 
 use App\Components\Documents\RegistrationOrderDocuments\Controllers\RegistrationOrderDocumentController;
