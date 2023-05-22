@@ -53,6 +53,19 @@ class Read
     }
 
     /**
+     * Базовый запрос по id группы
+     *
+     * @param string $groupId
+     *
+     * @return Builder
+     */
+    private static function getBaseQueryByGroupId(string $groupId): Builder
+    {
+        return self::getBaseQuery()
+            ->where('students.group_id', $groupId);
+    }
+
+    /**
      * Получить запись по id
      *
      * @param string $studentId - id студента
@@ -99,6 +112,28 @@ class Read
     {
         $query = new RecordsList(self::getBaseQueryByStudentId($studentId), $params);
         return $query->getRecords();
+    }
+
+    /**
+     * Получить список всех записей по группе
+     *
+     * @param $groupId
+     * @param $params
+     * @return int
+     */
+    public static function debtByGroupId($groupId, $params): int
+    {
+        $query = new RecordsList(self::getBaseQueryByGroupId($groupId), $params);
+        $records = $query->getRecords();
+        $coursePrice = (float)$records->first()->student()->group()->course()->price;
+        $valuesArr = $records
+            ->pluck('value')
+            ->all();
+        $dept = 0.0;
+        foreach ($valuesArr as $value) {
+            $dept += $coursePrice - (float) $value;
+        }
+        return round($dept);
     }
 
     /**

@@ -30,6 +30,7 @@ class Read
                 'public.courses.name AS course_name',
                 'public.courses.category AS course_category',
                 'public.courses.price AS course_price',
+                'public.courses.driving_hours AS course_driving_hours',
             )
             ->orderByDesc(
                 'public.groups.updated_at'

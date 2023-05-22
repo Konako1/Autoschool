@@ -21,6 +21,7 @@ class CreateCoursesTable extends Migration
             $table->id();
             $table->text('name');
             $table->text('category');
+            $table->integer('driving_hours');
             $table->float('price');
             $table->timestamps();
             $table->softDeletes();

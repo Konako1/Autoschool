@@ -15,6 +15,7 @@ class CoursesSeeder extends Seeder
             'name'          => 'Водитель категории А',
             'category'      => 'A',
             'price'         => 60000.00,
+            'driving_hours' => 20,
         ]);
         $this->setCourseModules($course);
 
@@ -22,6 +23,7 @@ class CoursesSeeder extends Seeder
             'name'          => 'Водитель категории B',
             'category'      => 'B',
             'price'         => 45000.00,
+            'driving_hours' => 20,
         ]);
         $this->setCourseModules($course);
 
@@ -29,9 +31,9 @@ class CoursesSeeder extends Seeder
             'name'          => 'Водитель категории D',
             'category'      => 'D',
             'price'         => 120000.00,
+            'driving_hours' => 20,
         ]);
         $this->setCourseModules($course);
-
     }
 
     private function setCourseModules(Course $course) {

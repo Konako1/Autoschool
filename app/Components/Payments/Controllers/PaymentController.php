@@ -93,6 +93,21 @@ class PaymentController extends BaseCrudController
         return $result;
     }
 
+    public function getDebtByGroup(Request $request)
+    {
+        try {
+            $params     = $this->getParams($request);
+            $group_id   = $request->query()['group_id'];
+            $records    = Read::debtByGroupId($group_id, $params);
+            $result     = new SuccessResource(['dept' => $records]);
+        }
+        catch (Exception $e) {
+            $result = $this->errorFromException($e, 'Ошибка получения записей');
+        }
+
+        return $result;
+    }
+
     /**
      * Создание одной записи
      * POST /api/payments/create?name={}&mark={}&student_id={}&date={}
