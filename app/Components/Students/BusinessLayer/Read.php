@@ -51,6 +51,7 @@ class Read
                 'public.courses.name as course_name',
                 'public.courses.category as course_category',
                 'public.courses.price as course_price',
+                'public.courses.driving_hours as course_driving_hours',
                 'public.instructors.id AS instructor_id',
                 'public.instructors.job AS instructor_job',
                 'public.instructors.education AS instructor_education',

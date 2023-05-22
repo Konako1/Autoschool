@@ -18,7 +18,8 @@ class Read
                 'courses.id as id',
                 'name',
                 'category',
-                'price'
+                'price',
+                'driving_hours',
             )
             ->with(
                 'modules'

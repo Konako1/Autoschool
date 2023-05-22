@@ -16,6 +16,7 @@ class Course extends Model
         'name',
         'category',
         'price',
+        'driving_hours',
     ];
 
     public function modules()

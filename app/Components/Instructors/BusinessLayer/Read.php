@@ -11,9 +11,9 @@ use Illuminate\Support\Collection;
 
 class Read
 {
-    private static function getBaseQuery(): Builder
+    private static function getBaseQuery($params = null): Builder
     {
-        return Instructor::query()
+        $query = Instructor::query()
             ->leftJoin(
                 'public.cars',
                 'public.instructors.car_id',
@@ -40,6 +40,11 @@ class Read
             ->orderByDesc(
                 'public.instructors.updated_at'
             );
+        $isPractician = $params['filter']['is_practician'] ?? null;
+        if (isset($isPractician)) {
+            $query->where('is_practician', '=', $isPractician);
+        }
+        return $query;
     }
 
     /**
@@ -72,7 +77,7 @@ class Read
      */
     public static function all($params): Collection
     {
-        $query = new RecordsList(self::getBaseQuery(), $params);
+        $query = new RecordsList(self::getBaseQuery($params), $params);
         return $query->getRecords();
     }
 
@@ -83,7 +88,7 @@ class Read
      */
     public static function count($params): int
     {
-        $query = new RecordsList(self::getBaseQuery(), $params);
+        $query = new RecordsList(self::getBaseQuery($params), $params);
         return $query->countTotal();
     }
 
