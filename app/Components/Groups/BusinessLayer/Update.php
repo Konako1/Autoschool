@@ -3,10 +3,9 @@
 namespace App\Components\Groups\BusinessLayer;
 
 use App\Common\Exceptions\DataBaseException;
-use App\Common\Exceptions\KnownException;
 use App\Components\Courses\Models\Course;
 use App\Components\Groups\Models\Group;
-use App\Components\Instructors\Models\Instructor;
+use App\Components\Timings\Models\Timing;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
@@ -15,7 +14,7 @@ class Update
     /**
      * @throws Exception
      */
-    public static function one(array $data, string $id, string $course_id): array
+    public static function one(array $data, string $id, string $course_id, string $timing_id): array
     {
         $group = Group::find($id);
         if (!$group) {
@@ -25,6 +24,11 @@ class Update
         $course = Course::find($course_id);
         if (!$course) {
             throw new DataBaseException("Курс с id $course_id не найден");
+        }
+
+        $timing = Timing::find($timing_id);
+        if (!$timing) {
+            throw new DataBaseException("Время с id $timing_id не найдено");
         }
 
         try {

@@ -26,18 +26,31 @@ class Read
                 '=',
                 'public.modules.id'
             )
+            ->leftJoin(
+                'public.timings',
+                'public.groups.timing_id',
+                '=',
+                'public.timings.id'
+            )
             ->select(
                 'public.lessons.id AS id',
-                'time_start',
-                'time_end',
+                'title',
+                'date',
                 'module_id',
                 'group_id',
                 'public.groups.name AS group_name',
                 'public.groups.studying_start_date AS group_studying_start_date',
                 'public.groups.studying_end_date AS group_studying_end_date',
                 'public.groups.examen_date AS group_examen_date',
+                'public.groups.course_id AS course_id',
+                'public.groups.timing_id AS timing_id',
+                'public.timings.start AS timing_start',
+                'public.timings.end AS timing_end',
+                'public.timings.time_interval AS timing_time_interval',
+                'public.timings.type AS timing_type',
                 'public.modules.name AS module_name',
                 'public.modules.description AS module_description',
+                'public.modules.hours AS module_hours',
             );
     }
 
@@ -49,13 +62,15 @@ class Read
      *
      * @return Builder
      */
-    private static function getBaseQueryByModuleAndGroupId(string $moduleId = null, string $groupId = null): Builder
+    private static function getBaseQueryByModuleAndGroupId(string $moduleId = null, string $groupId = null, bool $exam = false): Builder
     {
         $query = self::getBaseQuery();
         if (isset($moduleId))
             $query = $query->where('module_id', $moduleId);
         if (isset($groupId))
             $query = $query->where('group_id', $groupId);
+        if ($exam)
+            $query = $query->where('modules.description', '=', 'Экзамен');
 
         return $query;
     }
@@ -115,14 +130,13 @@ class Read
      * Получить список всех записей по группе
      *
      * @param $groupId
-     * @param $moduleId
      * @param $params
      *
      * @return Collection
      */
-    public static function allByGroupAndModuleId($groupId, $moduleId, $params): Collection
+    public static function allExamsByGroupId($groupId, $params): Collection
     {
-        $query = new RecordsList(self::getBaseQueryByModuleAndGroupId($moduleId, $groupId), $params);
+        $query = new RecordsList(self::getBaseQueryByModuleAndGroupId(null, $groupId, true), $params);
         return $query->getRecords();
     }
 
@@ -143,12 +157,12 @@ class Read
      * @param      $params
      * @param null $groupId
      * @param null $moduleId
-     *
+     * @param bool $exam
      * @return int
      */
-    public static function count($params, $groupId = null, $moduleId = null): int
+    public static function count($params, $groupId = null, $moduleId = null, bool $exam = false): int
     {
-        $query = new RecordsList(self::getBaseQueryByModuleAndGroupId($moduleId, $groupId), $params);
+        $query = new RecordsList(self::getBaseQueryByModuleAndGroupId($moduleId, $groupId, $exam), $params);
         return $query->countTotal();
     }
 

@@ -1,49 +1,26 @@
 <?php
 
-namespace App\Components\Cars\BusinessLayer;
+namespace App\Components\Weekdays\BusinessLayer;
 
 use App\Common\Exceptions\DataBaseException;
 use App\Common\Services\RecordsList;
-use App\Components\Cars\Models\Car;
-use Exception;
-use Illuminate\Database\Eloquent\Builder;
+use App\Components\Weekdays\Models\Weekday;
 use Illuminate\Support\Collection;
 
 class Read
 {
-    private static function getBaseQuery(): Builder
+    private static function getBaseQuery(): \Illuminate\Database\Eloquent\Builder
     {
-        return Car::query()
+        return Weekday::query()
             ->select(
                 'id',
-                'name',
-                'reg_number',
-                'gearbox_type',
+                'order',
+                'day_short',
+                'day_long',
             )
             ->orderByDesc(
-                'updated_at'
+                'public.weekdays.updated_at'
             );
-    }
-
-    /**
-     * Получить запись по id
-     *
-     * @param string $id - id записи
-     *
-     * @return array
-     * @throws Exception
-     */
-    public static function byId(string $id): array
-    {
-        $record = self::getBaseQuery()
-            ->find($id);
-
-        // проверка: если запись не найдена
-        if (!$record) {
-            throw new DataBaseException("id $id не существует.");
-        }
-
-        return $record->toArray();
     }
 
     /**
@@ -57,6 +34,27 @@ class Read
     {
         $query = new RecordsList(self::getBaseQuery(), $params);
         return $query->getRecords();
+    }
+
+    /**
+     * Получить запись по id
+     *
+     * @param string $id - id записи
+     *
+     * @return array
+     * @throws DataBaseException
+     */
+    public static function byId(string $id): array
+    {
+        $record = self::getBaseQuery()
+            ->find($id);
+
+        // проверка: если запись не найдена
+        if (!$record) {
+            throw new DataBaseException("id $id не существует.");
+        }
+
+        return $record->toArray();
     }
 
     /**
@@ -83,6 +81,6 @@ class Read
             ->withTrashed()
             ->find($id)
             ->toArray()
-        ;
+            ;
     }
 }

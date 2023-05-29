@@ -6,7 +6,6 @@ use App\Components\Courses\Models\Course;
 use App\Components\Courses\Models\CourseModule;
 use App\Components\Modules\Models\Module;
 use Illuminate\Database\Seeder;
-use Ramsey\Collection\Collection;
 
 class CoursesSeeder extends Seeder
 {
@@ -37,14 +36,13 @@ class CoursesSeeder extends Seeder
     }
 
     private function setCourseModules(Course $course) {
-        $allModules = Module::all();
-        $rndModules = Module::all()->random(count($allModules) - 1);
+        $allModules = Module::where('description', 'not like', 'Экзамен')->get();
+        $rndModules = Module::where('description', 'not like', 'Экзамен')->get()->random(count($allModules) - 1);
         foreach ($rndModules as $module) {
-            $courseModules = new CourseModule([
+            CourseModule::create([
                 'course_id' => $course->id,
                 'module_id' => $module->id
             ]);
-            $courseModules->save();
         }
     }
 }

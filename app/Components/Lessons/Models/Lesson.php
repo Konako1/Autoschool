@@ -13,8 +13,8 @@ class Lesson extends Model
     protected $table = 'lessons';
 
     protected $fillable = [
-        'time_start',
-        'time_end',
+        'title',
+        'date',
         'module_id',
         'group_id',
     ];

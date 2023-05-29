@@ -17,6 +17,7 @@ class CreateCarsTable extends Migration
             $table->id();
             $table->text('name');
             $table->text('reg_number');
+            $table->text('gearbox_type')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

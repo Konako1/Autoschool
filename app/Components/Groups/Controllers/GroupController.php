@@ -9,7 +9,6 @@ use App\Components\Groups\BusinessLayer\Create;
 use App\Components\Groups\BusinessLayer\Delete;
 use App\Components\Groups\BusinessLayer\Read;
 use App\Components\Groups\BusinessLayer\Update;
-use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -81,7 +80,7 @@ class GroupController extends BaseCrudController
     {
         try {
             $params = $request->query();
-            $record = Create::one($params, $params['course_id']);
+            $record = Create::one($params, $params['course_id'], $params['timing_id']);
             $result = new SuccessResource($record);
         }
         catch(Exception $e) {
@@ -100,7 +99,7 @@ class GroupController extends BaseCrudController
     {
         try {
             $params = $request->query();
-            $record = Update::one($params, $params['id'], $params['course_id']);
+            $record = Update::one($params, $params['id'], $params['course_id'], $params['timing_id']);
             $result = new SuccessResource($record);
         }
         catch(Exception $e) {

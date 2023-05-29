@@ -20,6 +20,12 @@ class Read
                 '=',
                 'public.courses.id'
             )
+            ->leftJoin(
+                'public.timings',
+                'public.groups.timing_id',
+                '=',
+                'public.timings.id'
+            )
             ->select(
                 'public.groups.id AS id',
                 'public.groups.name AS name',
@@ -31,6 +37,14 @@ class Read
                 'public.courses.category AS course_category',
                 'public.courses.price AS course_price',
                 'public.courses.driving_hours AS course_driving_hours',
+                'timing_id',
+                'public.timings.start AS timing_start',
+                'public.timings.end AS timing_end',
+                'public.timings.time_interval AS timing_time_interval',
+                'public.timings.type AS timing_type',
+            )
+            ->with(
+                'weekdays'
             )
             ->orderByDesc(
                 'public.groups.updated_at'

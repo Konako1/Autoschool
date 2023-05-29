@@ -16,6 +16,7 @@ class Module extends Model
         'instructor_id',
         'name',
         'description',
+        'hours'
     ];
 
     public function instructor() {

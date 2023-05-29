@@ -21,7 +21,15 @@ class Course extends Model
 
     public function modules()
     {
-        return $this->belongsToMany(Module::class)->where('course_module.deleted_at', '=', null);
+        return $this->belongsToMany(Module::class)
+            ->where('course_module.deleted_at', '=', null)
+            ->select([
+                'modules.id',
+                'modules.instructor_id',
+                'modules.name',
+                'modules.description',
+                'modules.hours'
+            ]);
     }
 
     protected $dates = ['deleted_at'];

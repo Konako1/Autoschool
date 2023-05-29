@@ -18,6 +18,7 @@ class CreateModulesTable extends Migration
             $table->integer('instructor_id');
             $table->text('name');
             $table->text('description');
+            $table->integer('hours');
             $table->timestamps();
             $table->softDeletes();
         });

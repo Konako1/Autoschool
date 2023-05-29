@@ -25,7 +25,6 @@ class Student extends Model
         'photo_path',
         'phone',
         'address',
-        'gearbox_type',
     ];
 
     public function payments() {

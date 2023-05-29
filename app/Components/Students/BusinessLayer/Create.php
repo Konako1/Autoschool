@@ -15,12 +15,8 @@ class Create
     /**
      * @throws Exception
      */
-    public static function one(array $data, string $groupId, string $instructor_id, string $gearbox_type): array
+    public static function one(array $data, string $groupId, string $instructor_id): array
     {
-        if (!($gearbox_type == 'auto' or $gearbox_type == 'manual')) {
-            throw new KnownException('Тип управления может быть только \'auto\' или \'manual\'');
-        }
-
         $group = Group::find($groupId);
         if (!$group) {
             throw new DataBaseException("Группа с id $groupId не найдена");

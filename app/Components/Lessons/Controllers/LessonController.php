@@ -24,10 +24,8 @@ class LessonController extends BaseCrudController
     {
         try {
             $params = $this->getParams($request);
-            if (isset($params['filter']['module']) && isset($params['filter']['group']))
-                $result = $this->getAllRecordsByModuleAndGroup($params);
-            elseif (isset($params['filter']['module']))
-                $result = $this->getAllRecordsByModule($params);
+            if (isset($params['filter']['exam']) && $params['filter']['exam'] && isset($params['filter']['group']))
+                $result = $this->getAllExamsForGroup($params);
             elseif (isset($params['filter']['group']))
                 $result = $this->getAllRecordsByGroup($params);
             else
@@ -102,18 +100,18 @@ class LessonController extends BaseCrudController
      * GET /api/lessons?filter[group]={[0-9]+}
      *
      */
-    public function getAllRecordsByModuleAndGroup(array $params)
+    public function getAllExamsForGroup(array $params)
     {
         try {
-            $records    = Read::allByGroupAndModuleId(
+            $records    = Read::allExamsByGroupId(
                 $params['filter']['group'],
-                $params['filter']['module'],
                 $params
             );
             $total      = Read::count(
                 $params,
                 $params['filter']['group'],
-                $params['filter']['module']
+                null,
+                true
             );
             $result     = new SuccessResourceCollection($records->toArray(), $total);
         }
