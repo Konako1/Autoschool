@@ -17,6 +17,7 @@ class Car extends Model
     protected $fillable = [
         'name',
         'reg_number',
+        'gearbox_type',
     ];
 
     protected $dates = ['deleted_at'];

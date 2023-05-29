@@ -24,6 +24,7 @@ class Read
                 'modules.id as id',
                 'modules.name as name',
                 'description',
+                'hours',
                 'instructor_id',
                 'public.instructors.job AS instructor_job',
                 'public.instructors.education AS instructor_education',

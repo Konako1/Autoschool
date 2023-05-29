@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGroupsTable extends Migration
+class CreateWeekdaysTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,15 @@ class CreateGroupsTable extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable('groups')) {
+        if (Schema::hasTable('weekdays')) {
             return;
         }
 
-        Schema::create('groups', function (Blueprint $table) {
+        Schema::create('weekdays', function (Blueprint $table) {
             $table->id();
-            $table->text('name');
-            $table->date('studying_start_date');
-            $table->date('studying_end_date');
-            $table->date('examen_date');
-            $table->integer('timing_id');
-            $table->integer('course_id');
+            $table->integer('order');
+            $table->text('day_short');
+            $table->text('day_long');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -37,6 +34,6 @@ class CreateGroupsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('groups');
+        Schema::dropIfExists('weekdays');
     }
 }

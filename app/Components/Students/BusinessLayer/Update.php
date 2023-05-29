@@ -15,15 +15,11 @@ class Update
     /**
      * @throws Exception
      */
-    public static function one(array $data, string $groupId, string $id, string $instructor_id, string $gearbox_type): array
+    public static function one(array $data, string $groupId, string $id, string $instructor_id): array
     {
         $student = Student::where('id', '=', $id, 'and')->where('group_id', '=', $groupId)->first();
         if (!$student) {
-            throw new DataBaseException("Студент с id $id не найден");
-        }
-
-        if (!($gearbox_type == 'auto' or $gearbox_type == 'manual')) {
-            throw new KnownException('Тип управления может быть только \'auto\' или \'manual\'');
+            throw new DataBaseException("Студент с id $id не найден в группе с id $groupId");
         }
 
         $group = Group::find($groupId);

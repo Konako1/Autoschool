@@ -21,6 +21,12 @@ class Read
                 'public.groups.id'
             )
             ->leftJoin(
+                'public.timings',
+                'public.groups.timing_id',
+                '=',
+                'public.timings.id'
+            )
+            ->leftJoin(
                 'public.instructors',
                 'public.students.instructor_id',
                 '=',
@@ -32,6 +38,12 @@ class Read
                 '=',
                 'public.courses.id'
             )
+            ->leftJoin(
+                'public.cars',
+                'public.instructors.car_id',
+                '=',
+                'public.cars.id'
+            )
             ->select(
                 'public.students.id AS id',
                 'public.students.name AS name',
@@ -41,13 +53,17 @@ class Read
                 'public.students.photo_path AS photo_path',
                 'public.students.phone AS phone',
                 'address',
-                'gearbox_type',
                 'group_id',
                 'public.groups.name AS group_name',
                 'public.groups.studying_start_date as group_studying_start_date',
                 'public.groups.studying_end_date as group_studying_end_date',
                 'public.groups.examen_date as group_examen_date',
                 'course_id',
+                'timing_id',
+                'public.timings.start AS timing_start',
+                'public.timings.end AS timing_end',
+                'public.timings.time_interval AS timing_time_interval',
+                'public.timings.type AS timing_type',
                 'public.courses.name as course_name',
                 'public.courses.category as course_category',
                 'public.courses.price as course_price',
@@ -58,13 +74,16 @@ class Read
                 'public.instructors.certificate AS instructor_certificate',
                 'public.instructors.driver_certificate AS instructor_driver_certificate',
                 'public.instructors.driver_certificate_category AS instructor_driver_certificate_category',
-                'public.instructors.car_id AS instructor_car_id',
                 'public.instructors.name AS instructor_name',
                 'public.instructors.surname AS instructor_surname',
                 'public.instructors.patronymic AS instructor_patronymic',
                 'public.instructors.photo_path AS instructor_photo_path',
                 'public.instructors.phone AS instructor_phone',
-                'public.instructors.is_practician AS instructor_is_practician'
+                'public.instructors.is_practician AS instructor_is_practician',
+                'public.instructors.car_id AS car_id',
+                'public.cars.name AS car_name',
+                'public.cars.reg_number AS car_reg_number',
+                'public.cars.gearbox_type AS car_gearbox_type',
             )
             ->with(
                 'payments'

@@ -1,28 +1,39 @@
 <?php
 
-namespace App\Components\Cars\BusinessLayer;
+namespace App\Components\Timings\BusinessLayer;
 
 use App\Common\Exceptions\DataBaseException;
 use App\Common\Services\RecordsList;
-use App\Components\Cars\Models\Car;
-use Exception;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Collection;
+use App\Components\Timings\Models\Timing;
 
 class Read
 {
-    private static function getBaseQuery(): Builder
+    private static function getBaseQuery(): \Illuminate\Database\Eloquent\Builder
     {
-        return Car::query()
+        return Timing::query()
             ->select(
                 'id',
-                'name',
-                'reg_number',
-                'gearbox_type',
+                'start',
+                'end',
+                'time_interval',
+                'type',
             )
             ->orderByDesc(
-                'updated_at'
+                'public.timings.updated_at'
             );
+    }
+
+    /**
+     * Получить список всех записей
+     *
+     * @param $params
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public static function all($params): \Illuminate\Support\Collection
+    {
+        $query = new RecordsList(self::getBaseQuery(), $params);
+        return $query->getRecords();
     }
 
     /**
@@ -31,7 +42,7 @@ class Read
      * @param string $id - id записи
      *
      * @return array
-     * @throws Exception
+     * @throws DataBaseException
      */
     public static function byId(string $id): array
     {
@@ -44,19 +55,6 @@ class Read
         }
 
         return $record->toArray();
-    }
-
-    /**
-     * Получить список всех записей
-     *
-     * @param $params
-     *
-     * @return Collection
-     */
-    public static function all($params): Collection
-    {
-        $query = new RecordsList(self::getBaseQuery(), $params);
-        return $query->getRecords();
     }
 
     /**
@@ -83,6 +81,6 @@ class Read
             ->withTrashed()
             ->find($id)
             ->toArray()
-        ;
+            ;
     }
 }

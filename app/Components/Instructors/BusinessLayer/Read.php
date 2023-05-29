@@ -36,6 +36,7 @@ class Read
                 'phone',
                 'public.cars.name AS car_name',
                 'public.cars.reg_number AS car_reg_number',
+                'public.cars.gearbox_type AS car_gearbox_type',
             )
             ->orderByDesc(
                 'public.instructors.updated_at'

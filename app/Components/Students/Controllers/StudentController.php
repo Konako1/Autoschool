@@ -102,7 +102,7 @@ class StudentController extends BaseCrudController
     {
         try {
             $params = $request->query();
-            $record = Create::one($params, $params['group_id'], $params['instructor_id'], $params['gearbox_type']);
+            $record = Create::one($params, $params['group_id'], $params['instructor_id']);
             $result = new SuccessResource($record);
         }
         catch(Exception $e) {
@@ -121,7 +121,7 @@ class StudentController extends BaseCrudController
     {
         try {
             $params = $request->query();
-            $record = Update::one($params, $params['group_id'], $params['id'], $params['instructor_id'], $params['gearbox_type']);
+            $record = Update::one($params, $params['group_id'], $params['id'], $params['instructor_id']);
             $result = new SuccessResource($record);
         }
         catch(Exception $e) {

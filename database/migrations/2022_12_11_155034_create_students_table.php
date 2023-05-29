@@ -28,7 +28,6 @@ class CreateStudentsTable extends Migration
             $table->text('photo_path');
             $table->text('phone');
             $table->text('address');
-            $table->text('gearbox_type');
             $table->timestamps();
             $table->softDeletes();
         });
