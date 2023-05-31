@@ -26,6 +26,12 @@ class Read
                 '=',
                 'public.timings.id'
             )
+            ->leftJoin(
+                'public.categories',
+                'public.courses.category_id',
+                '=',
+                'public.categories.id'
+            )
             ->select(
                 'public.groups.id AS id',
                 'public.groups.name AS name',
@@ -34,9 +40,12 @@ class Read
                 'examen_date',
                 'course_id',
                 'public.courses.name AS course_name',
-                'public.courses.category AS course_category',
                 'public.courses.price AS course_price',
                 'public.courses.driving_hours AS course_driving_hours',
+                'public.courses.category_id AS category_id',
+                'public.categories.name AS category_name',
+                'public.categories.description AS category_description',
+                'public.courses.instructor_id AS course_instructor_id',
                 'timing_id',
                 'public.timings.start AS timing_start',
                 'public.timings.end AS timing_end',

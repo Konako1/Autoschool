@@ -20,20 +20,28 @@ class Read
                 '=',
                 'public.cars.id'
             )
+            ->leftJoin(
+                'public.categories',
+                'public.instructors.category_id',
+                '=',
+                'public.categories.id'
+            )
             ->select(
                 'public.instructors.id AS id',
                 'job',
                 'education',
                 'certificate',
                 'driver_certificate',
-                'driver_certificate_category',
-                'car_id',
                 'is_practician',
                 'public.instructors.name AS name',
                 'surname',
                 'patronymic',
                 'photo_path',
                 'phone',
+                'public.instructors.category_id AS category_id',
+                'public.categories.name AS category_name',
+                'public.categories.description AS category_description',
+                'car_id',
                 'public.cars.name AS car_name',
                 'public.cars.reg_number AS car_reg_number',
                 'public.cars.gearbox_type AS car_gearbox_type',

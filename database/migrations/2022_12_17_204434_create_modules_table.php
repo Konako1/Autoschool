@@ -15,9 +15,9 @@ class CreateModulesTable extends Migration
     {
         Schema::create('modules', function (Blueprint $table) {
             $table->id();
-            $table->integer('instructor_id');
             $table->text('name');
             $table->text('description');
+            $table->text('metadata');
             $table->integer('hours');
             $table->timestamps();
             $table->softDeletes();

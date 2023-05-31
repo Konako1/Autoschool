@@ -25,7 +25,10 @@ class ModuleController extends BaseCrudController
     {
         try {
             $params = $this->getParams($request);
-            $result = $this->getAllRecords($params);
+            if (isset($request->query()['filters']['exams']) && $request->query()['filters']['exams'] == 'true')
+                $result = $this->getExamModules($params);
+            else
+                $result = $this->getAllRecords($params);
         }
         catch (Exception $e) {
             $result = $this->errorFromException($e, 'Ошибка получения записей');
@@ -72,6 +75,19 @@ class ModuleController extends BaseCrudController
         return $result;
     }
 
+    public function getExamModules(array $params) {
+        try {
+            $records    = Read::exams($params);
+            $total      = Read::count($params);
+            $result     = new SuccessResourceCollection($records->toArray(), $total);
+        }
+        catch (Exception $e) {
+            $result = $this->errorFromException($e, 'Ошибка получения записей');
+        }
+
+        return $result;
+    }
+
     /**
      * Создание одной записи
      * POST /api/modules/create?name={}&description={}
@@ -81,7 +97,7 @@ class ModuleController extends BaseCrudController
     {
         try {
             $params = $request->query();
-            $record = Create::one($params, $params['instructor_id']);
+            $record = Create::one($params);
             $result = new SuccessResource($record);
         }
         catch(Exception $e) {
@@ -100,7 +116,7 @@ class ModuleController extends BaseCrudController
     {
         try {
             $params = $request->query();
-            $record = Update::one($params, $params['id'], $params['instructor_id']);
+            $record = Update::one($params, $params['id']);
             $result = new SuccessResource($record);
         }
         catch(Exception $e) {
@@ -123,7 +139,7 @@ class ModuleController extends BaseCrudController
             $result = new SuccessResource($record);
         }
         catch(Exception $e) {
-            $result = $this->errorFromException($e, 'Ошибка удления записи');
+            $result = $this->errorFromException($e, 'Ошибка удаления записи');
         }
 
         return $result;

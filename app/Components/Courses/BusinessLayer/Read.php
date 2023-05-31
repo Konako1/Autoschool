@@ -14,12 +14,38 @@ class Read
     private static function getBaseQuery(): Builder
     {
         return Course::query()
+            ->leftJoin(
+                'public.instructors',
+                'public.courses.instructor_id',
+                '=',
+                'public.instructors.id'
+            )
+            ->leftJoin(
+                'public.categories',
+                'public.courses.category_id',
+                '=',
+                'public.categories.id'
+            )
             ->select(
                 'courses.id as id',
-                'name',
-                'category',
+                'courses.name',
                 'price',
                 'driving_hours',
+                'public.courses.category_id AS category_id',
+                'categories.name AS category_name',
+                'categories.description AS category_description',
+                'instructor_id',
+                'public.instructors.job AS instructor_job',
+                'public.instructors.education AS instructor_education',
+                'public.instructors.certificate AS instructor_certificate',
+                'public.instructors.driver_certificate AS instructor_driver_certificate',
+                'public.instructors.car_id AS instructor_car_id',
+                'public.instructors.name AS instructor_name',
+                'public.instructors.surname AS instructor_surname',
+                'public.instructors.patronymic AS instructor_patronymic',
+                'public.instructors.photo_path AS instructor_photo_path',
+                'public.instructors.phone AS instructor_phone',
+                'public.instructors.is_practician AS instructor_is_practician',
             )
             ->with(
                 'modules'

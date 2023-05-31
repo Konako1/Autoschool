@@ -17,8 +17,9 @@ class CreateExamensTable extends Migration
             $table->id();
             $table->text('name');
             $table->text('mark');
-            $table->integer('student_id');
             $table->date('date');
+            $table->integer('student_id');
+            $table->integer('module_id');
             $table->timestamps();
             $table->softDeletes();
         });

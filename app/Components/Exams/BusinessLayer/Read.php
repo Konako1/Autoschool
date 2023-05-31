@@ -20,12 +20,18 @@ class Read
                 '=',
                 'public.students.id'
             )
+            ->leftJoin(
+                'public.modules',
+                'public.exams.module_id',
+                '=',
+                'public.modules.id'
+            )
             ->select(
                 'public.exams.id AS id',
                 'public.exams.name as name',
                 'mark',
-                'student_id',
                 'date',
+                'student_id',
                 'public.students.group_id AS student_group_id',
                 'public.students.name AS student_name',
                 'public.students.surname AS student_surname',
@@ -34,6 +40,11 @@ class Read
                 'public.students.photo_path AS student_photo_path',
                 'public.students.phone AS student_phone',
                 'public.students.address AS student_address',
+                'module_id',
+                'public.modules.name AS module_name',
+                'public.modules.description AS module_description',
+                'public.modules.hours AS module_hours',
+                'public.modules.metadata AS module_metadata',
             )
             ->orderByDesc(
                 'public.exams.updated_at'

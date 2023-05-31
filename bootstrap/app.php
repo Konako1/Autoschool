@@ -266,4 +266,11 @@ $app->router->group(
     }
 );
 
+$app->router->group(
+    [],
+    function ($router) {
+        require __DIR__.'/../app/Components/Categories/routes.php';
+    }
+);
+
 return $app;

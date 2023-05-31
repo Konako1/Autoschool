@@ -20,8 +20,9 @@ class StudentsSeeder extends Seeder
         $instructors = Instructor::where('is_practician', '=', true)->get();
 
         for ($i = 0; $i < 20; $i++) {
+            $group = $groups->random();
             Student::create([
-                'group_id'          => $groups->random()->id,
+                'group_id'          => $group->id,
                 'name'              => $names[rand(0, count($names) - 1)],
                 'surname'           => $families[rand(0, count($families) - 1)],
                 'patronymic'        => $patronymics[rand(0, count($patronymics) - 1)],
@@ -29,7 +30,7 @@ class StudentsSeeder extends Seeder
                 'photo_path'        => $faker->numerify('photo###'),
                 'phone'             => $faker->numerify('8##########'),
                 'address'           => $faker->address,
-                'instructor_id'     => $instructors->random()->id,
+                'instructor_id'     => $instructors->where('category_id', '=', $group->course()->category()->id)->random()->id,
             ]);
         }
     }

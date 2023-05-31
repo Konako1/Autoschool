@@ -4,6 +4,7 @@ namespace App\Components\Instructors\BusinessLayer;
 
 use App\Common\Exceptions\DataBaseException;
 use App\Components\Cars\Models\Car;
+use App\Components\Categories\Models\Category;
 use App\Components\Instructors\Models\Instructor;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -13,11 +14,16 @@ class Update
     /**
      * @throws Exception
      */
-    public static function one(array $data, string $id, string $carId, string $is_practician): array
+    public static function one(array $data, string $id, string $carId, string $categoryId, string $is_practician): array
     {
         $instructor = Instructor::find($id);
         if (!$instructor) {
             throw new DataBaseException("Инструктор с id $id не найден");
+        }
+
+        $category = Category::find($categoryId);
+        if (!$category) {
+            throw new DataBaseException("Категория с id $categoryId не найдена");
         }
 
         // у лекторов не может быть машины тк они не занимаются вождением

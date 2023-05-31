@@ -2,14 +2,16 @@
 
 namespace App\Common\Helpers;
 
+use App\Components\Categories\Models\Category;
 use App\Components\Groups\Models\Group;
 use Carbon\Carbon;
 
 class GroupHelper
 {
-    public static function GenerateGroupName(string $category): string
+    public static function GenerateGroupName(string $categoryId): string
     {
-        $groups =  Group::query()
+        $category = Category::find($categoryId);
+        $groups = Group::query()
             ->leftJoin(
                 'public.courses',
                 'public.groups.course_id',
@@ -17,10 +19,10 @@ class GroupHelper
                 'public.courses.id'
             )
             ->select(
-                'public.groups.id AS id'
+                'public.groups.id AS id',
             )
             ->where(
-                'public.courses.category', '=', $category
+                'public.courses.category_id', '=', $categoryId
             )
             ->get();
 
@@ -29,6 +31,6 @@ class GroupHelper
             $groupsCount = "0$groupsCount";
         }
         $year =  substr(Carbon::now()->year, -2);
-        return "{$category}{$year}-$groupsCount";
+        return "{$category->name}-{$year}-$groupsCount";
     }
 }

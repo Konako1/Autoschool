@@ -19,7 +19,7 @@ class GroupsSeeder extends Seeder
 
         $course = $courses->random();
         $group = Group::create([
-            'name'                  => GroupHelper::GenerateGroupName($course->category),
+            'name'                  => GroupHelper::GenerateGroupName($course->category()->id),
             'studying_start_date'   => '2023-05-15',
             'studying_end_date'     => '2023-06-25',
             'examen_date'           => '2023-06-26',
@@ -30,7 +30,7 @@ class GroupsSeeder extends Seeder
 
         $course = $courses->random();
         $group = Group::create([
-            'name'                  => GroupHelper::GenerateGroupName($course->category),
+            'name'                  => GroupHelper::GenerateGroupName($course->category()->id),
             'studying_start_date'   => '2023-06-22',
             'studying_end_date'     => '2023-06-25',
             'examen_date'           => '2023-06-26',
@@ -41,7 +41,7 @@ class GroupsSeeder extends Seeder
 
         $course = $courses->random();
         $group = Group::create([
-            'name'                  => GroupHelper::GenerateGroupName($course->category),
+            'name'                  => GroupHelper::GenerateGroupName($course->category()->id),
             'studying_start_date'   => '2023-07-01',
             'studying_end_date'     => '2023-06-25',
             'examen_date'           => '2023-06-26',

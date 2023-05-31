@@ -17,6 +17,8 @@ class Lesson extends Model
         'date',
         'module_id',
         'group_id',
+        'moved_date',
+        'moved_time',
     ];
 
     public function module() {

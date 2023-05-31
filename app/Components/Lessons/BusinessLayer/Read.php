@@ -38,6 +38,8 @@ class Read
                 'date',
                 'module_id',
                 'group_id',
+                'moved_date',
+                'moved_time',
                 'public.groups.name AS group_name',
                 'public.groups.studying_start_date AS group_studying_start_date',
                 'public.groups.studying_end_date AS group_studying_end_date',
@@ -51,6 +53,7 @@ class Read
                 'public.modules.name AS module_name',
                 'public.modules.description AS module_description',
                 'public.modules.hours AS module_hours',
+                'public.modules.metadata AS module_metadata',
             );
     }
 
@@ -70,7 +73,7 @@ class Read
         if (isset($groupId))
             $query = $query->where('group_id', $groupId);
         if ($exam)
-            $query = $query->where('modules.description', '=', 'Экзамен');
+            $query = $query->where('modules.metadata', '=', 'exam');
 
         return $query;
     }

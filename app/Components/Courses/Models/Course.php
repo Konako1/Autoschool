@@ -2,6 +2,8 @@
 
 namespace App\Components\Courses\Models;
 
+use App\Components\Categories\Models\Category;
+use App\Components\Instructors\Models\Instructor;
 use App\Components\Modules\Models\Module;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -14,9 +16,10 @@ class Course extends Model
 
     protected $fillable = [
         'name',
-        'category',
         'price',
         'driving_hours',
+        'category_id',
+        'instructor_id',
     ];
 
     public function modules()
@@ -25,11 +28,19 @@ class Course extends Model
             ->where('course_module.deleted_at', '=', null)
             ->select([
                 'modules.id',
-                'modules.instructor_id',
                 'modules.name',
                 'modules.description',
-                'modules.hours'
+                'modules.hours',
+                'modules.metadata'
             ]);
+    }
+
+    public function instructor() {
+        return $this->hasOne(Instructor::class, 'id', 'instructor_id')->first();
+    }
+
+    public function category() {
+        return $this->hasOne(Category::class, 'id', 'category_id')->first();
     }
 
     protected $dates = ['deleted_at'];

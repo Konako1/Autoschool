@@ -102,7 +102,7 @@ class ExamController extends BaseCrudController
     {
         try {
             $params = $request->query();
-            $record = Create::one($params, $params['student_id']);
+            $record = Create::one($params, $params['student_id'], $params['module_id']);
             $result = new SuccessResource($record);
         }
         catch(Exception $e) {
@@ -121,7 +121,7 @@ class ExamController extends BaseCrudController
     {
         try {
             $params = $request->query();
-            $record = Update::one($params, $params['id'], $params['student_id']);
+            $record = Update::one($params, $params['id'], $params['student_id'], $params['module_id']);
             $result = new SuccessResource($record);
         }
         catch(Exception $e) {
