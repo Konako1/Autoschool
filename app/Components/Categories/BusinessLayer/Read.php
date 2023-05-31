@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Components\Cars\BusinessLayer;
+namespace App\Components\Categories\BusinessLayer;
 
 use App\Common\Exceptions\DataBaseException;
 use App\Common\Services\RecordsList;
-use App\Components\Cars\Models\Car;
+use App\Components\Categories\Models\Category;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
@@ -13,24 +13,15 @@ class Read
 {
     private static function getBaseQuery(): Builder
     {
-        return Car::query()
-            ->leftJoin(
-                'public.categories',
-                'public.cars.category_id',
-                '=',
-                'public.categories.id'
-            )
+        return Category::query()
             ->select(
-                'cars.id AS id',
-                'cars.name AS car_name',
-                'reg_number',
-                'gearbox_type',
-                'category_id',
-                'categories.name AS category_name',
-                'categories.description AS category_description',
+                'id',
+                'name',
+                'description',
+                'has_gearbox',
             )
             ->orderByDesc(
-                'cars.updated_at'
+                'updated_at'
             );
     }
 
@@ -92,6 +83,6 @@ class Read
             ->withTrashed()
             ->find($id)
             ->toArray()
-        ;
+            ;
     }
 }

@@ -3,8 +3,10 @@
 namespace App\Components\Courses\BusinessLayer;
 
 use App\Common\Exceptions\KnownException;
+use App\Components\Categories\Models\Category;
 use App\Components\Courses\Models\Course;
 use App\Components\Courses\Models\CourseModule;
+use App\Components\Instructors\Models\Instructor;
 use App\Components\Modules\Models\Module;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -15,8 +17,21 @@ class Create
     /**
      * @throws Exception
      */
-    public static function one(array $data): array
+    public static function one(array $data, string $instructor_id, string $category_id): array
     {
+        $instructor = Instructor::find($instructor_id);
+        if (!$instructor) {
+            throw new KnownException("Инструктор с id $instructor_id не найден");
+        }
+        if ($instructor->is_practician) {
+            throw new KnownException('Лектором не может быть практик');
+        }
+
+        $category = Category::find($category_id);
+        if (!$category) {
+            throw new KnownException("Категория с id $category_id не найдена");
+        }
+
         $modulesId = $data['modules'];
         $modules = array();
 

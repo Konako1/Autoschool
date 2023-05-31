@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             WeekdaysSeeder::class,
             TimingsSeeder::class,
+            CategoriesSeeder::class,
             CarsSeeder::class,
             InstructorsSeeder::class,
             ModulesSeeder::class,
@@ -23,7 +24,6 @@ class DatabaseSeeder extends Seeder
             GroupsSeeder::class,
             LessonsSeeder::class,
             StudentsSeeder::class,
-            ExamsSeeder::class,
             PaymentsSeeder::class
         ]);
     }

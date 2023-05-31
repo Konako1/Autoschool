@@ -24,7 +24,7 @@ class CreateInstructorsTable extends Migration
             $table->text('education');
             $table->text('certificate');
             $table->text('driver_certificate');
-            $table->text('driver_certificate_category');
+            $table->integer('category_id');
             $table->integer('car_id')->nullable();
             $table->boolean('is_practician');
             $table->timestamps();

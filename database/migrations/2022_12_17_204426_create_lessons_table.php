@@ -19,6 +19,8 @@ class CreateLessonsTable extends Migration
             $table->date('date');
             $table->integer('module_id');
             $table->integer('group_id');
+            $table->date('moved_date')->nullable();
+            $table->time('moved_time')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

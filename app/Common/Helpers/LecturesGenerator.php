@@ -29,7 +29,7 @@ class LecturesGenerator
             }
         }
 
-        $examModules = Module::where('description', '=', 'Экзамен')->get();
+        $examModules = Module::where('metadata', '=', 'exam')->get();
         Lesson::create([
             'title'         => $examModules[0]->name,
             'date'          => $lastDate->toDate(),

@@ -39,6 +39,12 @@ class Read
                 'public.courses.id'
             )
             ->leftJoin(
+                'public.categories',
+                'public.courses.category_id',
+                '=',
+                'public.categories.id'
+            )
+            ->leftJoin(
                 'public.cars',
                 'public.instructors.car_id',
                 '=',
@@ -58,22 +64,24 @@ class Read
                 'public.groups.studying_start_date as group_studying_start_date',
                 'public.groups.studying_end_date as group_studying_end_date',
                 'public.groups.examen_date as group_examen_date',
-                'course_id',
                 'timing_id',
                 'public.timings.start AS timing_start',
                 'public.timings.end AS timing_end',
                 'public.timings.time_interval AS timing_time_interval',
                 'public.timings.type AS timing_type',
+                'course_id',
                 'public.courses.name as course_name',
-                'public.courses.category as course_category',
                 'public.courses.price as course_price',
                 'public.courses.driving_hours as course_driving_hours',
+                'public.courses.category_id as category_id',
+                'public.categories.name AS category_name',
+                'public.categories.description AS category_description',
+                'public.courses.instructor_id AS course_instructor_id',
                 'public.instructors.id AS instructor_id',
                 'public.instructors.job AS instructor_job',
                 'public.instructors.education AS instructor_education',
                 'public.instructors.certificate AS instructor_certificate',
                 'public.instructors.driver_certificate AS instructor_driver_certificate',
-                'public.instructors.driver_certificate_category AS instructor_driver_certificate_category',
                 'public.instructors.name AS instructor_name',
                 'public.instructors.surname AS instructor_surname',
                 'public.instructors.patronymic AS instructor_patronymic',
