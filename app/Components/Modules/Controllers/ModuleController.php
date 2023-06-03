@@ -25,7 +25,7 @@ class ModuleController extends BaseCrudController
     {
         try {
             $params = $this->getParams($request);
-            if (isset($request->query()['filters']['exams']) && $request->query()['filters']['exams'] == 'true')
+            if (isset($request->query()['filter']['exams']) && $request->query()['filter']['exams'] == 'true')
                 $result = $this->getExamModules($params);
             else
                 $result = $this->getAllRecords($params);

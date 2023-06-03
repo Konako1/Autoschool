@@ -32,10 +32,15 @@ class Update
             throw new DataBaseException("Занятие с id $id не найдено");
         }
 
+        $dataToUpdate = [
+            'moved_date' => $data['moved_date'],
+            'moved_time' => $data['moved_time'],
+        ];
+
         try {
             DB::beginTransaction();
 
-            $lesson->update($data);
+            $lesson->update($dataToUpdate);
 
             DB::commit();
         }

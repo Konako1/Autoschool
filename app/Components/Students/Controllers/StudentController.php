@@ -62,7 +62,7 @@ class StudentController extends BaseCrudController
     {
         try {
             $params = $request->query();
-            $records    = Read::byId($params['id'], ['group' => $params['group']]);
+            $records    = Read::byId($params['id'], $params['filter']);
             $result     = new SuccessResource($records);
         }
         catch (Exception $e) {
