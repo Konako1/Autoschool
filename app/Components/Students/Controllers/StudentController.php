@@ -24,8 +24,8 @@ class StudentController extends BaseCrudController
     {
         try {
             $params = $this->getParams($request);
-            $filters = $request->query()['filter'];
-            $result = $this->getAllRecords($params, $filters ?? null);
+            $filters = $request->query();
+            $result = $this->getAllRecords($params, $filters['filter'] ?? null);
         }
         catch (Exception $e) {
             $result = $this->errorFromException($e, 'Ошибка получения записей');
