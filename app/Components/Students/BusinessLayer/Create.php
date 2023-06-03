@@ -4,9 +4,12 @@ namespace App\Components\Students\BusinessLayer;
 
 use App\Common\Exceptions\DataBaseException;
 use App\Common\Exceptions\KnownException;
+use App\Common\Helpers\PaymentsValidator;
 use App\Components\Groups\Models\Group;
 use App\Components\Instructors\Models\Instructor;
+use App\Components\Payments\Models\Payment;
 use App\Components\Students\Models\Student;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
@@ -30,10 +33,21 @@ class Create
             throw new KnownException("Инструктором по практике не может быть лектор");
         }
 
+        if(!isset($data['payment_value']))
+            throw new KnownException("Необходимо внести начальный платеж");
+
         try {
             DB::beginTransaction();
 
             $student = Student::create($data);
+
+            PaymentsValidator::validate($student, $data['payment_value']);
+
+            Payment::create([
+                'value' => $data['payment_value'],
+                'date' => Carbon::now(),
+                'student_id' => $student->id,
+            ]);
 
             DB::commit();
         }
@@ -42,6 +56,6 @@ class Create
             throw $e;
         }
 
-        return Read::byId($groupId, (string) $student->id);
+        return Read::byId((string) $student->id, ['group' => $groupId]);
     }
 }
