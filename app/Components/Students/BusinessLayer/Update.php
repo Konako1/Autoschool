@@ -47,6 +47,6 @@ class Update
             throw $e;
         }
 
-        return Read::byId($groupId, (string) $student->id);
+        return Read::byId((string) $student->id, ['group' => $groupId]);
     }
 }

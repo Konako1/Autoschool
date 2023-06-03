@@ -28,7 +28,13 @@ class Student extends Model
     ];
 
     public function payments() {
-        return $this->hasMany(Payment::class, 'student_id', 'id');
+        return $this
+            ->hasMany(Payment::class, 'student_id', 'id')
+            ->select(
+                'value',
+                'date',
+                'student_id'
+            );
     }
 
     public function instructor() {
