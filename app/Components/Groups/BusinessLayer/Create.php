@@ -33,7 +33,7 @@ class Create
             throw new DataBaseException("Время с id $timing_id не найдено");
         }
 
-        $data['name'] = GroupHelper::GenerateGroupName($course->category);
+        $data['name'] = GroupHelper::GenerateGroupName($course->category_id);
         $data['studying_end_date'] = Carbon::createFromTimestamp(0);
 
         try {

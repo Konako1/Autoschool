@@ -11,27 +11,55 @@ use Illuminate\Support\Collection;
 
 class Read
 {
-    private static function getBaseQuery(): Builder
+    private static function getBaseQuery(array $filters = null): Builder
     {
-        return Car::query()
+        $query = Car::query()
             ->leftJoin(
                 'public.categories',
                 'public.cars.category_id',
                 '=',
                 'public.categories.id'
             )
+            ->leftJoin(
+                'public.instructors',
+                'public.instructors.car_id',
+                '=',
+                'public.cars.id'
+            )
             ->select(
                 'cars.id AS id',
                 'cars.name AS car_name',
                 'reg_number',
                 'gearbox_type',
-                'category_id',
+                'public.cars.category_id AS category_id',
                 'categories.name AS category_name',
                 'categories.description AS category_description',
+                'public.instructors.id AS instructor_id',
+                'public.instructors.job AS instructor_job',
+                'public.instructors.education AS instructor_education',
+                'public.instructors.certificate AS instructor_certificate',
+                'public.instructors.driver_certificate AS instructor_driver_certificate',
+                'public.instructors.is_practician AS instructor_is_practician',
+                'public.instructors.name AS instructor_name',
+                'public.instructors.surname AS instructor_surname',
+                'public.instructors.patronymic AS instructor_patronymic',
+                'public.instructors.photo_path AS instructor_photo_path',
+                'public.instructors.phone AS instructor_phone',
             )
             ->orderByDesc(
                 'cars.updated_at'
             );
+
+        if (!isset($filters))
+            return $query;
+
+        if (isset($filters['free']) && $filters['free'])
+            $query = $query->where('public.instructors.id', '=', null);
+
+        if (isset($filters['taken']) && $filters['taken'])
+            $query = $query->where('public.instructors.id', '!=', null);
+
+        return $query;
     }
 
     /**
@@ -59,12 +87,12 @@ class Read
      * Получить список всех записей
      *
      * @param $params
-     *
+     * @param array $filters
      * @return Collection
      */
-    public static function all($params): Collection
+    public static function all($params, array $filters = null): Collection
     {
-        $query = new RecordsList(self::getBaseQuery(), $params);
+        $query = new RecordsList(self::getBaseQuery($filters), $params);
         return $query->getRecords();
     }
 
@@ -73,9 +101,9 @@ class Read
      *
      * @return int
      */
-    public static function count($params): int
+    public static function count($params, array $filters = null): int
     {
-        $query = new RecordsList(self::getBaseQuery(), $params);
+        $query = new RecordsList(self::getBaseQuery($filters), $params);
         return $query->countTotal();
     }
 

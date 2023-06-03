@@ -3,6 +3,7 @@
 namespace App\Components\Exams\BusinessLayer;
 
 use App\Common\Exceptions\DataBaseException;
+use App\Common\Exceptions\KnownException;
 use App\Components\Exams\Models\Exam;
 use App\Components\Modules\Models\Module;
 use App\Components\Students\Models\Student;
@@ -22,8 +23,8 @@ class Create
         }
 
         $module = Module::find($moduleId);
-        if (!$module && $module->metadata != 'exam'){
-            throw new DataBaseException("Модуль с id $moduleId не является экзаменом.");
+        if ($module && $module->metadata != 'exam'){
+            throw new KnownException("Модуль с id $moduleId не является экзаменом.");
         }
 
         try {
