@@ -25,7 +25,8 @@ class GroupController extends BaseCrudController
     {
         try {
             $params = $this->getParams($request);
-            $result = $this->getAllRecords($params);
+            $filters = $request->query()['filter'];
+            $result = $this->getAllRecords($params, $filters ?? null);
         }
         catch (Exception $e) {
             $result = $this->errorFromException($e, 'Ошибка получения записей');
@@ -39,11 +40,11 @@ class GroupController extends BaseCrudController
      * GET /api/groups/
      *
      */
-    public function getAllRecords(array $params)
+    public function getAllRecords(array $params, array $filters = null)
     {
         try {
-            $records    = Read::all($params);
-            $total      = Read::count($params);
+            $records    = Read::all($params, $filters);
+            $total      = Read::count($params, $filters);
             $result     = new SuccessResourceCollection($records->toArray(), $total);
         }
         catch (Exception $e) {

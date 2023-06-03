@@ -11,9 +11,9 @@ use Illuminate\Support\Collection;
 
 class Read
 {
-    private static function getBaseQuery(): Builder
+    private static function getBaseQuery(array $filter = null): Builder
     {
-        return Group::query()
+        $query = Group::query()
             ->leftJoin(
                 'public.courses',
                 'public.groups.course_id',
@@ -57,6 +57,16 @@ class Read
             ->orderByDesc(
                 'public.groups.updated_at'
             );
+        if (!isset($filter))
+            return $query;
+
+        if (key_exists('category_id', $filter))
+            $query = $query->where('category_id', '=', $filter['category_id']);
+
+        if (key_exists('timing_type', $filter))
+            $query = $query->where('public.timings.type', 'like', $filter['timing_type']);
+
+        return $query;
     }
 
     /**
@@ -84,23 +94,23 @@ class Read
      * Получить список всех записей
      *
      * @param $params
-     *
+     * @param array|null $filters
      * @return Collection
      */
-    public static function all($params): Collection
+    public static function all($params, array $filters = null): Collection
     {
-        $query = new RecordsList(self::getBaseQuery(), $params);
+        $query = new RecordsList(self::getBaseQuery($filters), $params);
         return $query->getRecords();
     }
 
     /**
      * @param $params
-     *
+     * @param array|null $filters
      * @return int
      */
-    public static function count($params): int
+    public static function count($params, array $filters = null): int
     {
-        $query = new RecordsList(self::getBaseQuery(), $params);
+        $query = new RecordsList(self::getBaseQuery($filters), $params);
         return $query->countTotal();
     }
 
