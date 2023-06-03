@@ -9,6 +9,7 @@ use App\Components\Groups\BusinessLayer\Create;
 use App\Components\Groups\BusinessLayer\Delete;
 use App\Components\Groups\BusinessLayer\Read;
 use App\Components\Groups\BusinessLayer\Update;
+use App\Components\Groups\BusinessLayer\Validations\CalendarValidation;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -123,6 +124,32 @@ class GroupController extends BaseCrudController
         }
         catch(Exception $e) {
             $result = $this->errorFromException($e, 'Ошибка удаления записи');
+        }
+
+        return $result;
+    }
+
+    public function getAvailableTimings(Request $request) {
+        try {
+            $params = $request->query();
+            $record = CalendarValidation::getAvailableTimings($params['course_id'], $params['studying_start_date']);
+            $result = new SuccessResourceCollection($record);
+        }
+        catch(Exception $e) {
+            $result = $this->errorFromException($e, 'Ошибка получения времени');
+        }
+
+        return $result;
+    }
+
+    public function getAvailableWeekdays(Request $request) {
+        try {
+            $params = $request->query();
+            $record = CalendarValidation::getAvailableWeekdays($params['course_id'], $params['studying_start_date'], $params['timing_id']);
+            $result = new SuccessResourceCollection($record);
+        }
+        catch(Exception $e) {
+            $result = $this->errorFromException($e, 'Ошибка получения дней недели');
         }
 
         return $result;

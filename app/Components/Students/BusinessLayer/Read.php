@@ -63,7 +63,6 @@ class Read
                 'public.groups.name AS group_name',
                 'public.groups.studying_start_date as group_studying_start_date',
                 'public.groups.studying_end_date as group_studying_end_date',
-                'public.groups.examen_date as group_examen_date',
                 'timing_id',
                 'public.timings.start AS timing_start',
                 'public.timings.end AS timing_end',

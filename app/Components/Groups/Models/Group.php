@@ -20,7 +20,6 @@ class Group extends Model
         'name',
         'studying_start_date',
         'studying_end_date',
-        'examen_date',
         'course_id',
         'timing_id',
     ];

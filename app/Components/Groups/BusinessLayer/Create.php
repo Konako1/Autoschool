@@ -49,8 +49,6 @@ class Create
             }
 
             LecturesGenerator::generate($group);
-            $group->studying_end_date = Lesson::all()->where('group_id', '=', $group->id)->sortBy('date')->last()->date;
-            $group->update();
 
             DB::commit();
         }

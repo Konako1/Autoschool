@@ -38,12 +38,14 @@ class LecturesGenerator
         ]);
 
         $lastDate->addDays(self::calculateDaysToAdd($lastDate, $weekdays));
-        Lesson::create([
+        $lastLesson = Lesson::create([
             'title'         => $examModules[1]->name,
             'date'          => $lastDate->toDate(),
             'module_id'     => $examModules[1]->id,
             'group_id'      => $group->id,
         ]);
+        $group->studying_end_date = $lastLesson->date;
+        $group->update();
     }
 
     private static function calculateDaysToAdd(Carbon $date, Collection $weekdays): int {

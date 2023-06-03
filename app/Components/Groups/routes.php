@@ -19,5 +19,7 @@ if (isset($router)) {
             $router->get('/create',    ['uses' => 'GroupController@createRecord']);
             $router->get('/update',    ['uses' => 'GroupController@updateRecord']);
             $router->get('/delete',    ['uses' => 'GroupController@deleteRecord']);
+            $router->get('/availableTimings',     ['uses' => 'GroupController@getAvailableTimings']);
+            $router->get('/availableWeekdays',    ['uses' => 'GroupController@getAvailableWeekdays']);
         });
 }

@@ -22,7 +22,6 @@ class CreateGroupsTable extends Migration
             $table->text('name');
             $table->date('studying_start_date');
             $table->date('studying_end_date');
-            $table->date('examen_date');
             $table->integer('timing_id');
             $table->integer('course_id');
             $table->timestamps();
