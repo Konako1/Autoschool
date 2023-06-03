@@ -24,10 +24,8 @@ class StudentController extends BaseCrudController
     {
         try {
             $params = $this->getParams($request);
-            if (isset($params['filter']['group']))
-                $result = $this->getAllRecordsByGroup($params);
-            else
-                $result = $this->getAllRecords($params);
+            $filters = $request->query()['filter'];
+            $result = $this->getAllRecords($params, $filters ?? null);
         }
         catch (Exception $e) {
             $result = $this->errorFromException($e, 'Ошибка получения записей');
@@ -41,30 +39,11 @@ class StudentController extends BaseCrudController
      * GET api/students
      *
      */
-    public function getAllRecords(array $params)
+    public function getAllRecords(array $params, array $filters = null)
     {
         try {
-            $records    = Read::all($params);
-            $total      = Read::count($params);
-            $result     = new SuccessResourceCollection($records->toArray(), $total);
-        }
-        catch (Exception $e) {
-            $result = $this->errorFromException($e, 'Ошибка получения записей');
-        }
-
-        return $result;
-    }
-
-    /**
-     * Получение списка записей по группе
-     * GET /api/students?filter[group]={[0-9]+}
-     *
-     */
-    public function getAllRecordsByGroup(array $params)
-    {
-        try {
-            $records    = Read::allByGroupId($params['filter']['group'], $params);
-            $total      = Read::count($params);
+            $records    = Read::all($params, $filters);
+            $total      = Read::count($params, $filters);
             $result     = new SuccessResourceCollection($records->toArray(), $total);
         }
         catch (Exception $e) {

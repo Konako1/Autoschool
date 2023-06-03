@@ -11,9 +11,9 @@ use Illuminate\Support\Collection;
 
 class Read
 {
-    private static function getBaseQuery(): Builder
+    private static function getBaseQuery(array $filter = null): Builder
     {
-        return Student::query()
+        $query =  Student::query()
             ->leftJoin(
                 'public.groups',
                 'public.students.group_id',
@@ -99,33 +99,40 @@ class Read
                 'public.students.updated_at'
             );
 
-    }
+        if (!isset($filter))
+            return $query;
 
-    /**
-     * Базовый запрос по id группы
-     *
-     * @param string $groupId
-     *
-     * @return Builder
-     */
-    private static function getBaseQueryByGroupId(string $groupId): Builder
-    {
-        return self::getBaseQuery()
-            ->where('group_id', $groupId);
+        if (key_exists('group', $filter))
+            $query = $query->where('group_id', $filter['group']);
+
+        if (key_exists('fio', $filter))
+            $query = $query
+                ->whereRaw(
+                    "concat(".
+                    "public.students.name,' ',public.students.surname,' ',public.students.patronymic, ' ',".
+                    "public.students.name,' ',public.students.patronymic,' ',public.students.surname, ' ',".
+                    "public.students.surname,' ',public.students.name,' ',public.students.patronymic, ' ',".
+                    "public.students.surname,' ',public.students.patronymic,' ',public.students.name, ' ',".
+                    "public.students.patronymic,' ',public.students.surname,' ',public.students.name, ' ',".
+                    "public.students.patronymic,' ',public.students.name,' ',public.students.surname".
+                    ") like ?",
+                    "%{$filter['fio']}%"
+                );
+
+        return $query;
     }
 
     /**
      * Получить запись по id
      *
-     * @param string $groupId - id группы
      * @param string $id - id записи
-     *
+     * @param array|null $filters
      * @return array
-     * @throws Exception
+     * @throws DataBaseException
      */
-    public static function byId(string $groupId, string $id): array
+    public static function byId(string $id, array $filters = null): array
     {
-        $record = self::getBaseQueryByGroupId($groupId)
+        $record = self::getBaseQuery($filters)
             ->find($id);
 
         // проверка: если запись не найдена
@@ -140,26 +147,12 @@ class Read
      * Получить список всех записей
      *
      * @param $params
-     *
+     * @param array|null $filters
      * @return Collection
      */
-    public static function all($params): Collection
+    public static function all($params, array $filters = null): Collection
     {
-        $query = new RecordsList(self::getBaseQuery(), $params);
-        return $query->getRecords();
-    }
-
-    /**
-     * Получить список всех записей по группе
-     *
-     * @param $groupId
-     * @param $params
-     *
-     * @return Collection
-     */
-    public static function allByGroupId($groupId, $params): Collection
-    {
-        $query = new RecordsList(self::getBaseQueryByGroupId($groupId), $params);
+        $query = new RecordsList(self::getBaseQuery($filters), $params);
         return $query->getRecords();
     }
 
@@ -168,9 +161,9 @@ class Read
      *
      * @return int
      */
-    public static function count($params): int
+    public static function count($params, array $filters = null): int
     {
-        $query = new RecordsList(self::getBaseQuery(), $params);
+        $query = new RecordsList(self::getBaseQuery($filters), $params);
         return $query->countTotal();
     }
 
@@ -184,7 +177,7 @@ class Read
      */
     public static function trashed(string $groupId, string $id): array
     {
-        return self::getBaseQueryByGroupId($groupId)
+        return self::getBaseQuery(['group_id' => $groupId])
             ->withTrashed()
             ->find($id)
             ->toArray()
