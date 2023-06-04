@@ -49,9 +49,12 @@ class Read
             ->orderByDesc(
                 'public.instructors.updated_at'
             );
-        $isPractician = $params['filter']['is_practician'] ?? null;
-        if (isset($isPractician)) {
-            $query->where('is_practician', '=', $isPractician);
+
+        if (isset($params['filter']['is_practician'])) {
+            $query->where('is_practician', '=', $params['filter']['is_practician']);
+        }
+        if (isset($params['filter']['category_id'])) {
+            $query->where('public.instructors.category_id', '=', $params['filter']['category_id']);
         }
         return $query;
     }

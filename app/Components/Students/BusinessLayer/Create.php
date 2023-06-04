@@ -41,7 +41,7 @@ class Create
 
             $student = Student::create($data);
 
-            PaymentsValidator::validate($student, $data['payment_value']);
+            $data['payment_value'] = PaymentsValidator::validate($student, $data['payment_value']);
 
             Payment::create([
                 'value' => $data['payment_value'],

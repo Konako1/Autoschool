@@ -11,7 +11,8 @@ class PaymentsValidator
     /**
      * @throws KnownException
      */
-    public static function validate(Student $student, float $value) {
+    public static function validate(Student $student, string $value): int {
+        $value = (int) $value;
         if ($value <= 0) {
             throw new KnownException("Значение оплаты должно быть больше нуля.");
         }
@@ -25,5 +26,6 @@ class PaymentsValidator
                 throw new KnownException("Курс полностью оплачен.");
             throw new KnownException("Оплата курса превышена на {$overpay}р. Внесите {$finalPaymentNeeded}р для полной оплаты.");
         }
+        return $value;
     }
 }

@@ -16,9 +16,7 @@ class LecturesGenerator
         $lastDate = Carbon::createFromFormat('Y-m-d', $group->studying_start_date);
 
         foreach ($modules as $module) {
-            $lessonsCount = $module->hours / 2;
-
-            for ($i = 0; $i < $lessonsCount; $i++) {
+            for ($i = 0; $i < $module->hours; $i++) {
                 Lesson::create([
                     'title'         => $module->name . ' ' . ($i + 1),
                     'date'          => $lastDate->toDate(),

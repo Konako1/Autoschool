@@ -25,10 +25,8 @@ class ModuleController extends BaseCrudController
     {
         try {
             $params = $this->getParams($request);
-            if (isset($request->query()['filter']['exams']) && $request->query()['filter']['exams'] == 'true')
-                $result = $this->getExamModules($params);
-            else
-                $result = $this->getAllRecords($params);
+            $filter = $request->query();
+            $result = $this->getAllRecords($params, $filter['filter'] ?? null);
         }
         catch (Exception $e) {
             $result = $this->errorFromException($e, 'Ошибка получения записей');
@@ -42,11 +40,11 @@ class ModuleController extends BaseCrudController
      * GET /api/modules/
      *
      */
-    public function getAllRecords(array $params)
+    public function getAllRecords(array $params, array $filters = null)
     {
         try {
-            $records    = Read::all($params);
-            $total      = Read::count($params);
+            $records    = Read::all($params, $filters);
+            $total      = Read::count($params, $filters);
             $result     = new SuccessResourceCollection($records->toArray(), $total);
         }
         catch (Exception $e) {
@@ -70,19 +68,6 @@ class ModuleController extends BaseCrudController
         }
         catch (Exception $e) {
             $result = $this->errorFromException($e, 'Ошибка получения записи');
-        }
-
-        return $result;
-    }
-
-    public function getExamModules(array $params) {
-        try {
-            $records    = Read::exams($params);
-            $total      = Read::count($params);
-            $result     = new SuccessResourceCollection($records->toArray(), $total);
-        }
-        catch (Exception $e) {
-            $result = $this->errorFromException($e, 'Ошибка получения записей');
         }
 
         return $result;

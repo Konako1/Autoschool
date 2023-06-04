@@ -22,7 +22,7 @@ class Create
             throw new DataBaseException("Студент с id $studentId не найден");
         }
 
-        PaymentsValidator::validate($student, $data['value']);
+        $data['value'] = PaymentsValidator::validate($student, $data['value']);
 
         try {
             DB::beginTransaction();
