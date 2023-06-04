@@ -27,7 +27,7 @@ class Update
             throw new DataBaseException("Платеж с id $id не найден");
         }
 
-        PaymentsValidator::validate($student, $data['value']);
+        $data['value'] = PaymentsValidator::validate($student, $data['value']);
 
         try {
             DB::beginTransaction();

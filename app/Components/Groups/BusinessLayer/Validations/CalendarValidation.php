@@ -17,7 +17,7 @@ class CalendarValidation
         $modules = $course->modules()->get();
         $lessonsCount = 2;
         foreach ($modules as $module) {
-            $lessonsCount += $module->hours / 2;
+            $lessonsCount += $module->hours;
         }
 
         $weeks = $lessonsCount % 3 == 0 ? (int)($lessonsCount / 3) : (int)($lessonsCount / 3) + 1;

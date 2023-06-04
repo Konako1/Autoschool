@@ -11,9 +11,9 @@ use Illuminate\Support\Collection;
 
 class Read
 {
-    private static function getBaseQuery(): Builder
+    private static function getBaseQuery(array $filters = null): Builder
     {
-        return Module::query()
+        $query = Module::query()
             ->select(
                 'modules.id as id',
                 'modules.name as name',
@@ -24,6 +24,15 @@ class Read
             ->orderByDesc(
                 'public.modules.updated_at'
             );
+
+        if (isset($filters['exams'])) {
+            if ($filters['exams'])
+                $query = $query->where('metadata', 'like', 'exam');
+            else
+                $query = $query->where('metadata', 'like', 'module');
+        }
+
+        return $query;
     }
 
     /**
@@ -51,36 +60,23 @@ class Read
      * Получить список всех записей
      *
      * @param $params
-     *
+     * @param array|null $filters
      * @return Collection
      */
-    public static function all($params): Collection
+    public static function all($params, array $filters = null): Collection
     {
-        $query = new RecordsList(self::getBaseQuery(), $params);
+        $query = new RecordsList(self::getBaseQuery($filters), $params);
         return $query->getRecords();
     }
 
     /**
-     * Получить список всех записей
-     *
      * @param $params
-     *
-     * @return Collection
-     */
-    public static function exams($params): Collection
-    {
-        $query = new RecordsList(self::getBaseQuery(), $params);
-        return $query->getRecords()->where('metadata', 'is like', 'exam');
-    }
-
-    /**
-     * @param $params
-     *
+     * @param array|null $filters
      * @return int
      */
-    public static function count($params): int
+    public static function count($params, array $filters = null): int
     {
-        $query = new RecordsList(self::getBaseQuery(), $params);
+        $query = new RecordsList(self::getBaseQuery($filters), $params);
         return $query->countTotal();
     }
 

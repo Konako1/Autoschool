@@ -131,7 +131,7 @@ class Read
             ->all();
         $dept = 0.0;
         foreach ($valuesArr as $value) {
-            $dept += $coursePrice - (float) $value;
+            $dept += $coursePrice - (int) $value;
         }
         return round($dept);
     }

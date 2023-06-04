@@ -3,6 +3,7 @@
 namespace App\Components\Modules\BusinessLayer;
 
 use App\Common\Exceptions\DataBaseException;
+use App\Common\Exceptions\KnownException;
 use App\Components\Modules\Models\Module;
 use App\Components\Students\Models\Student;
 use Exception;
@@ -19,6 +20,9 @@ class Delete
         if (!$module) {
             throw new DataBaseException("Модуль с id $id не найден");
         }
+
+        if ($module->metadata == 'exam')
+            throw new KnownException("Модуль экзамена удалить невозможно");
 
         try {
             DB::beginTransaction();
