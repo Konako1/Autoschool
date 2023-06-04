@@ -26,7 +26,7 @@ class Read
             );
 
         if (isset($filters['exams'])) {
-            if ($filters['exams'])
+            if ($filters['exams'] == "true")
                 $query = $query->where('metadata', 'like', 'exam');
             else
                 $query = $query->where('metadata', 'like', 'module');
