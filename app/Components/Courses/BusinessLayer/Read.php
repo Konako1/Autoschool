@@ -11,9 +11,9 @@ use Illuminate\Support\Collection;
 
 class Read
 {
-    private static function getBaseQuery(): Builder
+    private static function getBaseQuery(array $filters = null): Builder
     {
-        return Course::query()
+        $query = Course::query()
             ->leftJoin(
                 'public.instructors',
                 'public.courses.instructor_id',
@@ -53,6 +53,14 @@ class Read
             ->orderByDesc(
                 'public.courses.updated_at'
             );
+
+        if (!isset($filters))
+            return $query;
+
+        if (isset($filters['category_id']))
+            $query = $query->where('public.courses.category_id', '=', $filters['category_id']);
+
+        return $query;
     }
 
     /**
@@ -83,9 +91,9 @@ class Read
      *
      * @return Collection
      */
-    public static function all($params): Collection
+    public static function all($params, array $filters = null): Collection
     {
-        $query = new RecordsList(self::getBaseQuery(), $params);
+        $query = new RecordsList(self::getBaseQuery($filters), $params);
         return $query->getRecords();
     }
 
@@ -94,9 +102,9 @@ class Read
      *
      * @return int
      */
-    public static function count($params): int
+    public static function count($params, array $filters = null): int
     {
-        $query = new RecordsList(self::getBaseQuery(), $params);
+        $query = new RecordsList(self::getBaseQuery($filters), $params);
         return $query->countTotal();
     }
 

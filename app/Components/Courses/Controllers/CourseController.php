@@ -24,7 +24,8 @@ class CourseController extends BaseCrudController
     {
         try {
             $params = $this->getParams($request);
-            $result = $this->getAllRecords($params);
+            $filters = $request->query();
+            $result = $this->getAllRecords($params, $filters['filter'] ?? null);
         }
         catch (Exception $e) {
             $result = $this->errorFromException($e, 'Ошибка получения записей');
@@ -38,11 +39,11 @@ class CourseController extends BaseCrudController
      * GET /api/courses/
      *
      */
-    public function getAllRecords(array $params)
+    public function getAllRecords(array $params, array $filters)
     {
         try {
-            $records    = Read::all($params);
-            $total      = Read::count($params);
+            $records    = Read::all($params, $filters);
+            $total      = Read::count($params, $filters);
             $result     = new SuccessResourceCollection($records->toArray(), $total);
         }
         catch (Exception $e) {
