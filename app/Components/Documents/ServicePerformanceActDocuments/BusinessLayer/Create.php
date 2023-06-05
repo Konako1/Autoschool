@@ -11,13 +11,18 @@ class Create
     public static function one(string $studentId): ServicePerformanceActDocument
     {
         $student = Student::find($studentId);
+        $course = $student->group()->course();
+        $hours = $student->group()->lessons()->count();
+
         $data = [
             'data' => [
                 'student' => [
                     'fio' => "{$student->surname} {$student->name} {$student->patronymic}",
                     'address' => $student->address,
+                    ],
+                'course_hours' => $hours,
+                'category' => $course->category()->name,
                 ]
-            ]
         ];
 
         $servicePerformanceActTE = new ServicePerformanceActTemplateEngine();

@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Components\Documents\ExamProtocolDocuments\Models;
+namespace App\Components\Documents\GroupDebtDocuments\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ExamProtocolDocument extends Model
+class GroupDebtDocument extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'documents_exam_protocol';
+    protected $table = 'group_debt_documents';
 
     protected $fillable = [
         'group_id',

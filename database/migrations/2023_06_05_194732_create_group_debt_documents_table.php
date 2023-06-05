@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDocumentsExamProtocolTable extends Migration
+class CreateGroupDebtDocumentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateDocumentsExamProtocolTable extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable('documents_exam_protocol')) {
+        if (Schema::hasTable('group_debt_documents')) {
             return;
         }
 
-        Schema::create('documents_exam_protocol', function (Blueprint $table) {
+        Schema::create('group_debt_documents', function (Blueprint $table) {
             $table->id();
             $table->integer('group_id');
             $table->text('name');
@@ -35,6 +35,6 @@ class CreateDocumentsExamProtocolTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('documents_exam_protocol');
+        Schema::dropIfExists('group_debt_documents');
     }
 }
