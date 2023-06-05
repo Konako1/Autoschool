@@ -20,7 +20,7 @@ class Create
             'data' => [
                 'date_today' => DateFormatter::format(Carbon::now()),
                 'group' => [
-                    'category' => $course->category,
+                    'category' => $course->category()->name,
                     'name' => $group->name,
                 ],
                 'student' => [

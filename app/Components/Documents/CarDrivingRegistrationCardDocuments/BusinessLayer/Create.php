@@ -21,7 +21,7 @@ class Create
         $patronymic_char = str_split("$instructor->patronymic", 2)[0];
         $data = [
             'data' => [
-                'course_category' => $course->category,
+                'course_category' => $course->category()->name,
                 'instructor_fio' => "$instructor->surname $name_char. $patronymic_char.",
                 'group' => [
                     'name' => $group->name,

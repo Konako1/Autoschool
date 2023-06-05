@@ -5,47 +5,53 @@ namespace App\Components\Documents\ExamProtocolDocuments\BusinessLayer;
 use App\Common\DocxTemplateEngine\Templates\ExamProtocolTemplateEngine;
 use App\Common\Helpers\DateFormatter;
 use App\Components\Documents\ExamProtocolDocuments\Models\ExamProtocolDocument;
+use App\Components\Groups\Models\Group;
+use App\Components\Modules\Models\Module;
 use App\Components\Students\Models\Student;
 use Illuminate\Support\Carbon;
 
 class Create
 {
-    public static function one(string $studentId): ExamProtocolDocument
+    public static function one(string $groupId): ExamProtocolDocument
     {
-        $student = Student::find($studentId);
-        $group = $student->group();
-        $studentInstructor = $student->instructor();
+        $group = Group::find($groupId);
+        $students = $group->students();
         $course = $group->course();
-        $exams = $student->exams();
+        $courseInstructor = $course->instructor();
 
-        $examArr = [];
-        foreach ($exams as $exam) {
-            // TODO: заменить инструктора по вождению на инструктора из модуля (и подвязать экзамены к модулю)
-            $examArr[] = [
-                'name' => $exam->name,
-                'mark' => $exam->mark,
-                'instructor_fio' => "$studentInstructor->surname $studentInstructor->name $studentInstructor->patronymic",
+        $studentsArr = [];
+        foreach ($students as $student) {
+            $exams = $student->exams();
+            $marks = [];
+            foreach ($exams as $exam) {
+                if ($exam->module()->name == 'Практический экзамен')
+                    $marks['practice'] = $exam->mark;
+                if ($exam->module()->name == 'Теоретический экзамен')
+                    $marks['theory'] = $exam->mark;
+            }
+            $studentsArr[] = [
+                'number' => count($studentsArr) + 1,
+                'fio' => "$student->surname $student->name $student->patronymic",
+                'theory_mark' => $marks['theory'] ?? null,
+                'practice_mark' => $marks['practice'] ?? null,
             ];
         }
 
         $data = [
             'data' => [
                 'date_today' => DateFormatter::format(Carbon::now()),
-                'instructor_fio' => "$studentInstructor->surname $studentInstructor->name $studentInstructor->patronymic",
+                'instructor_fio' => "$courseInstructor->surname $courseInstructor->name $courseInstructor->patronymic",
                 'group' => [
-                    'category' => $course->category,
+                    'category' => $course->category()->name,
                     'name' => $group->name,
                 ],
-                'student' => [
-                    'fio' => "$student->surname $student->name $student->patronymic",
-                ],
-                'exams' => $examArr,
+                'students' => $studentsArr,
             ]
         ];
 
-        $driverExamCardTE = new ExamProtocolTemplateEngine();
-        $savedDocumentData = $driverExamCardTE->saveDocument($data);
-        $savedDocumentData['student_id'] = $student->id;
+        $examProtocolTE = new ExamProtocolTemplateEngine();
+        $savedDocumentData = $examProtocolTE->saveDocument($data);
+        $savedDocumentData['group_id'] = $group->id;
 
         $savedDocument = new ExamProtocolDocument($savedDocumentData);
         $savedDocument->save();

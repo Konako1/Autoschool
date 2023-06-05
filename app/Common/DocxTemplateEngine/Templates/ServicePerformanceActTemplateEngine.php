@@ -12,7 +12,9 @@ class ServicePerformanceActTemplateEngine extends BaseDocxTemplateEngine
             'student' => [
                 'fio' => null,
                 'address' => null,
-            ]
+            ],
+            'course_hours' => null,
+            'category' => null,
         ]
     ];
 

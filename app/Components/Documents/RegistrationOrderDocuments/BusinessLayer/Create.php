@@ -14,24 +14,8 @@ class Create
     {
         $group = Group::find($groupId);
         $course = $group->course();
-        $modules = $course->modules()->get();
+        $courseInstructor = $course->instructor();
         $students = $group->students();
-
-        $modulesArr = [];
-        foreach ($modules as $module) {
-            $instructor = $module->instructor();
-            $modulesArr[] = [
-                'name' => $module->name,
-                'instructor' => [
-                    'fio' => "$instructor->surname $instructor->name $instructor->patronymic",
-                    'education' => $instructor->education,
-                    'certificate' => $instructor->certificate,
-                    'driver_certificate' => $instructor->driver_certificate,
-                    'driver_certificate_category' => $instructor->driver_certificate_category,
-                    'job' => $instructor->job,
-                ],
-            ];
-        }
 
         $instructorsArr = [];
         $studentsArr = [];
@@ -44,7 +28,7 @@ class Create
                     'education' => $instructor->education,
                     'certificate' => $instructor->certificate,
                     'driver_certificate' => $instructor->driver_certificate,
-                    'driver_certificate_category' => $instructor->driver_certificate_category,
+                    'category' => $instructor->category()->name,
                     'job' => $instructor->job,
                 ];
             }
@@ -60,18 +44,24 @@ class Create
             'data' => [
                 'date_today' => DateFormatter::format(Carbon::now()),
                 'group' => [
-                    'number' => $group->name,
-                    'category' => $course->category,
+                    'name' => $group->name,
+                    'category' => $course->category()->name,
                     'studying_start_date' => DateFormatter::stringFormat($group->studying_start_date),
                     'studying_end_date' => DateFormatter::stringFormat($group->studying_end_date),
                 ],
-                'modules' => $modulesArr,
+                'course' => [
+                    'name' => $course->name,
+                    'instructor' => [
+                        'fio' => "$courseInstructor->surname $courseInstructor->name $courseInstructor->patronymic",
+                        'education' => $courseInstructor->education,
+                        'certificate' => $courseInstructor->certificate,
+                        'driver_certificate' => $courseInstructor->driver_certificate,
+                        'category' => $courseInstructor->category()->name,
+                        'job' => $courseInstructor->job,
+                    ],
+                ],
                 'instructors' => $instructorsArr,
                 'students' => $studentsArr,
-                'exam' => [
-                    'date' => DateFormatter::stringFormat($group->examen_date),
-                    'student_count' => count($students),
-                ]
             ]
         ];
 

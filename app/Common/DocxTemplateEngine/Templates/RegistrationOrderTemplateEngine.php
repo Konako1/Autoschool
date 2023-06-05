@@ -11,23 +11,21 @@ class RegistrationOrderTemplateEngine extends BaseDocxTemplateEngine
         'data' => [
             'date_today' => null,
             'group' => [
-                'number' => null,
+                'name' => null,
                 'category' => null,
                 'studying_start_date' => null,
                 'studying_end_date' => null,
             ],
-            'modules' => [
-                '*' => [
-                    'name' => null,
-                    'instructor' => [
-                        'fio' => null,
-                        'education' => null,
-                        'certificate' => null,
-                        'driver_certificate' => null,
-                        'driver_certificate_category' => null,
-                        'job' => null,
-                    ],
-                ]
+            'course' => [
+                'name' => null,
+                'instructor' => [
+                    'fio' => null,
+                    'education' => null,
+                    'certificate' => null,
+                    'driver_certificate' => null,
+                    'category' => null,
+                    'job' => null,
+                ],
             ],
             'instructors' => [
                 '*' => [
@@ -36,7 +34,7 @@ class RegistrationOrderTemplateEngine extends BaseDocxTemplateEngine
                     'education' => null,
                     'certificate' => null,
                     'driver_certificate' => null,
-                    'driver_certificate_category' => null,
+                    'category' => null,
                     'job' => null,
                 ]
             ],
@@ -48,10 +46,6 @@ class RegistrationOrderTemplateEngine extends BaseDocxTemplateEngine
                     'address' => null,
                 ]
             ],
-            'exam' => [
-                'date' => null,
-                'student_count' => null,
-            ]
         ]
     ];
 

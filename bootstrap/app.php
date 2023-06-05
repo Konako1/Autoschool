@@ -255,6 +255,13 @@ $app->router->group(
 $app->router->group(
     [],
     function ($router) {
+        require __DIR__.'/../app/Components/Documents/GroupDebtDocuments/routes.php';
+    }
+);
+
+$app->router->group(
+    [],
+    function ($router) {
         require __DIR__.'/../app/Components/Weekdays/routes.php';
     }
 );
