@@ -16,13 +16,11 @@ class PaymentsSeeder extends Seeder
 
         foreach ($students as $student) {
             $coursePrice = $student->group()->course()->price;
-            $rand = random_int(0, 2);
+            $rand = random_int(0, 1);
             if ($rand == 0)
                 $value = $coursePrice;
-            elseif ($rand == 1)
-                $value = $coursePrice / 2;
             else
-                $value = 0;
+                $value = $coursePrice / 2;
 
             Payment::create([
                 'value'         => $value,

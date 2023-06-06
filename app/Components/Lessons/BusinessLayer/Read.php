@@ -11,9 +11,9 @@ use Illuminate\Support\Collection;
 
 class Read
 {
-    private static function getBaseQuery(): Builder
+    private static function getBaseQuery(array $filters = null): Builder
     {
-        return Lesson::query()
+        $query = Lesson::query()
             ->leftJoin(
                 'public.groups',
                 'public.lessons.group_id',
@@ -54,25 +54,18 @@ class Read
                 'public.modules.hours AS module_hours',
                 'public.modules.metadata AS module_metadata',
             );
-    }
 
-    /**
-     * Базовый запрос по id модуля и id группы
-     *
-     * @param string|null $moduleId
-     * @param string|null $groupId
-     *
-     * @return Builder
-     */
-    private static function getBaseQueryByModuleAndGroupId(string $moduleId = null, string $groupId = null, bool $exam = false): Builder
-    {
-        $query = self::getBaseQuery();
-        if (isset($moduleId))
-            $query = $query->where('module_id', $moduleId);
-        if (isset($groupId))
-            $query = $query->where('group_id', $groupId);
-        if ($exam)
-            $query = $query->where('modules.metadata', '=', 'exam');
+        if (!isset($filters))
+            return $query;
+
+        if ($filters['group_id'])
+            $query = $query->where('group_id', $filters['group_id']);
+
+        if ($filters['module_id'])
+            $query = $query->where('module_id', $filters['module_id']);
+
+        if($filters['exam'] == 'true')
+            $query = $query->where('public.modules.metadata', '=', 'exam');
 
         return $query;
     }
@@ -80,16 +73,14 @@ class Read
     /**
      * Получить запись по id
      *
-     * @param string $moduleId - id модуля
-     * @param string $groupId  - id группы
-     * @param string $id       - id записи
-     *
+     * @param string $id - id записи
+     * @param array|null $filters
      * @return array
-     * @throws Exception
+     * @throws DataBaseException
      */
-    public static function byId(string $moduleId, string $groupId, string $id): array
+    public static function byId(string $id, array $filters = null): array
     {
-        $record = self::getBaseQueryByModuleAndGroupId($moduleId, $groupId)
+        $record = self::getBaseQuery($filters)
             ->find($id);
 
         // проверка: если запись не найдена
@@ -101,85 +92,39 @@ class Read
     }
 
     /**
-     * Получить список всех записей по модулю
-     *
-     * @param $moduleId
-     * @param $params
-     *
-     * @return Collection
-     */
-    public static function allByModuleId($moduleId, $params): Collection
-    {
-        $query = new RecordsList(self::getBaseQueryByModuleAndGroupId($moduleId), $params);
-        return $query->getRecords();
-    }
-
-    /**
-     * Получить список всех записей по группе
-     *
-     * @param $groupId
-     * @param $params
-     *
-     * @return Collection
-     */
-    public static function allByGroupId($groupId, $params): Collection
-    {
-        $query = new RecordsList(self::getBaseQueryByModuleAndGroupId(null, $groupId), $params);
-        return $query->getRecords();
-    }
-
-    /**
-     * Получить список всех записей по группе
-     *
-     * @param $groupId
-     * @param $params
-     *
-     * @return Collection
-     */
-    public static function allExamsByGroupId($groupId, $params): Collection
-    {
-        $query = new RecordsList(self::getBaseQueryByModuleAndGroupId(null, $groupId, true), $params);
-        return $query->getRecords();
-    }
-
-    /**
      * Получить список всех записей
      *
      * @param $params
-     *
+     * @param array|null $filters
      * @return Collection
      */
-    public static function all($params): Collection
+    public static function all($params, array $filters = null): Collection
     {
-        $query = new RecordsList(self::getBaseQuery(), $params);
+        $query = new RecordsList(self::getBaseQuery($filters), $params);
         return $query->getRecords();
     }
 
     /**
      * @param      $params
-     * @param null $groupId
-     * @param null $moduleId
-     * @param bool $exam
+     * @param array|null $filters
      * @return int
      */
-    public static function count($params, $groupId = null, $moduleId = null, bool $exam = false): int
+    public static function count($params, array $filters = null): int
     {
-        $query = new RecordsList(self::getBaseQueryByModuleAndGroupId($moduleId, $groupId, $exam), $params);
+        $query = new RecordsList(self::getBaseQuery($filters), $params);
         return $query->countTotal();
     }
 
     /**
      * Получить удаленную запись по id
      *
-     * @param string $moduleId
-     * @param string $groupId
      * @param string $id
-     *
+     * @param array|null $filters
      * @return array
      */
-    public static function trashed(string $moduleId, string $groupId, string $id): array
+    public static function trashed(string $id): array
     {
-        return self::getBaseQueryByModuleAndGroupId($moduleId, $groupId)
+        return self::getBaseQuery()
             ->withTrashed()
             ->find($id)
             ->toArray()

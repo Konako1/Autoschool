@@ -15,7 +15,7 @@ if (isset($router)) {
         ],
         function () use ($router) {
             $router->get('/',           ['uses' => 'LessonController@baseGet']);
-            $router->get('/one',        ['uses' => 'LessonController@getRecord']);
+            //$router->get('/one',        ['uses' => 'LessonController@getRecord']);
             //$router->get('/create',    ['uses' => 'LessonController@createRecord']);
             $router->get('/update',    ['uses' => 'LessonController@updateRecord']);
             //$router->get('/delete',    ['uses' => 'LessonController@deleteRecord']);

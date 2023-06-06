@@ -38,6 +38,6 @@ class Create
             throw $e;
         }
 
-        return Read::byId($moduleId, $groupId, (string) $lesson->id);
+        return Read::byId((string) $lesson->id);
     }
 }
