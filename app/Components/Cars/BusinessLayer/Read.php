@@ -62,6 +62,9 @@ class Read
         if (isset($filters['category_id']))
             $query = $query->where('public.cars.category_id', '=', $filters['category_id']);
 
+        if (isset($filters['instructor_id']))
+            $query = $query->orWhere('public.instructors.id', '=', $filters['instructor_id']);
+
         return $query;
     }
 
