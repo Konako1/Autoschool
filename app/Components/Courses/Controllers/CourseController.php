@@ -39,7 +39,7 @@ class CourseController extends BaseCrudController
      * GET /api/courses/
      *
      */
-    public function getAllRecords(array $params, array $filters)
+    public function getAllRecords(array $params, array $filters = null)
     {
         try {
             $records    = Read::all($params, $filters);
