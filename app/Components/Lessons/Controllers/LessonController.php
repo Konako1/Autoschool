@@ -25,7 +25,7 @@ class LessonController extends BaseCrudController
         try {
             $params = $this->getParams($request);
             $filters = $request->query();
-            $result = $this->getAllRecords($params, $filters['filter']);
+            $result = $this->getAllRecords($params, $filters['filter'] ?? null);
         }
         catch (Exception $e) {
             $result = $this->errorFromException($e, 'Ошибка получения записей');
