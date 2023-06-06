@@ -80,7 +80,7 @@ class InstructorController extends BaseCrudController
     {
         try {
             $params = $request->query();
-            $record = Create::one($params, $params['car_id'], $params['category_id'], $params['is_practician']);
+            $record = Create::one($params, $params['category_id'], $params['is_practician']);
             $result = new SuccessResource($record);
         }
         catch(Exception $e) {
@@ -99,7 +99,7 @@ class InstructorController extends BaseCrudController
     {
         try {
             $params = $request->query();
-            $record = Update::one($params, $params['id'], $params['car_id'], $params['category_id'], $params['is_practician']);
+            $record = Update::one($params, $params['id'], $params['category_id'], $params['is_practician']);
             $result = new SuccessResource($record);
         }
         catch(Exception $e) {
