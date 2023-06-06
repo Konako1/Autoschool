@@ -133,7 +133,7 @@ class GroupController extends BaseCrudController
     public function getAvailableTimings(Request $request) {
         try {
             $params = $request->query();
-            $record = CalendarValidation::getAvailableTimings($params['course_id'], $params['studying_start_date']);
+            $record = CalendarValidation::getAvailableTimings($params['filter']['course_id'], $params['filter']['studying_start_date']);
             $result = new SuccessResourceCollection($record);
         }
         catch(Exception $e) {
@@ -146,7 +146,7 @@ class GroupController extends BaseCrudController
     public function getAvailableWeekdays(Request $request) {
         try {
             $params = $request->query();
-            $record = CalendarValidation::getAvailableWeekdays($params['course_id'], $params['studying_start_date'], $params['timing_id']);
+            $record = CalendarValidation::getAvailableWeekdays($params['filter']['course_id'], $params['filter']['studying_start_date'], $params['filter']['timing_id']);
             $result = new SuccessResourceCollection($record);
         }
         catch(Exception $e) {

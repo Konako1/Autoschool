@@ -63,7 +63,8 @@ class CalendarValidation
             }
         }
 
-        return array_keys($timings);
+        $ids = array_keys($timings);
+        return Timing::whereIn('id', $ids)->get()->toArray();
     }
 
     public static function getAvailableWeekdays(string $courseId, string $studyingStartDate, string $timingId = null): array {
@@ -87,6 +88,6 @@ class CalendarValidation
             }
         }
 
-        return $availableWeekdays;
+        return Weekday::whereIn('id', $availableWeekdays)->get()->toArray();
     }
 }
