@@ -3,6 +3,7 @@
 namespace App\Components\Instructors\BusinessLayer;
 
 use App\Common\Exceptions\DataBaseException;
+use App\Common\Exceptions\KnownException;
 use App\Components\Cars\Models\Car;
 use App\Components\Categories\Models\Category;
 use App\Components\Instructors\Models\Instructor;
@@ -14,7 +15,7 @@ class Update
     /**
      * @throws Exception
      */
-    public static function one(array $data, string $id, string $carId, string $categoryId, string $is_practician): array
+    public static function one(array $data, string $id, string $categoryId, string $is_practician): array
     {
         $instructor = Instructor::find($id);
         if (!$instructor) {
@@ -28,6 +29,10 @@ class Update
 
         // у лекторов не может быть машины тк они не занимаются вождением
         if ($is_practician) {
+            $carId = $data['car_id'] ?? null;
+            if (!isset($carId))
+                throw new KnownException("Необходимо передавать id машины вместе с инструктором");
+
             $car = Car::find($carId);
             if (!$car) {
                 throw new DataBaseException("Машина с id $carId не найдена");

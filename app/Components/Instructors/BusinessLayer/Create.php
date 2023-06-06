@@ -3,6 +3,7 @@
 namespace App\Components\Instructors\BusinessLayer;
 
 use App\Common\Exceptions\DataBaseException;
+use App\Common\Exceptions\KnownException;
 use App\Components\Cars\Models\Car;
 use App\Components\Categories\Models\Category;
 use App\Components\Instructors\Models\Instructor;
@@ -14,7 +15,7 @@ class Create
     /**
      * @throws Exception
      */
-    public static function one(array $data, string $carId, string $categoryId, string $is_practician): array
+    public static function one(array $data, string $categoryId, string $is_practician): array
     {
         $category = Category::find($categoryId);
         if (!$category) {
@@ -23,6 +24,10 @@ class Create
 
         // у лекторов не может быть машины тк они не занимаются вождением
         if ($is_practician) {
+            $carId = $data['car_id'] ?? null;
+            if (!isset($carId))
+                throw new KnownException("Необходимо передавать id машины вместе с инструктором");
+
             $car = Car::find($carId);
             if (!$car) {
                 throw new DataBaseException("Машина с id $carId не найдена");

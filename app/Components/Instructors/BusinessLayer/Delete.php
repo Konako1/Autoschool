@@ -3,6 +3,7 @@
 namespace App\Components\Instructors\BusinessLayer;
 
 use App\Common\Exceptions\DataBaseException;
+use App\Components\Cars\Models\Car;
 use App\Components\Instructors\Models\Instructor;
 use App\Components\Students\Models\Student;
 use Exception;
@@ -24,6 +25,8 @@ class Delete
             DB::beginTransaction();
 
             $instructor->delete();
+            $instructor->car_id = null;
+            $instructor->update();
 
             DB::commit();
         }
