@@ -43,6 +43,6 @@ class Delete
             throw $e;
         }
 
-        return Read::trashed($moduleId, $groupId, (string) $lesson->id);
+        return Read::trashed((string) $lesson->id);
     }
 }

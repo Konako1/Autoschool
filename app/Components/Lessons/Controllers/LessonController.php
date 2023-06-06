@@ -24,12 +24,8 @@ class LessonController extends BaseCrudController
     {
         try {
             $params = $this->getParams($request);
-            if (isset($params['filter']['exam']) && $params['filter']['exam'] && isset($params['filter']['group']))
-                $result = $this->getAllExamsForGroup($params);
-            elseif (isset($params['filter']['group']))
-                $result = $this->getAllRecordsByGroup($params);
-            else
-                $result = $this->getAllRecords($params);
+            $filters = $request->query();
+            $result = $this->getAllRecords($params, $filters['filter']);
         }
         catch (Exception $e) {
             $result = $this->errorFromException($e, 'Ошибка получения записей');
@@ -43,99 +39,15 @@ class LessonController extends BaseCrudController
      * GET /api/lessons/
      *
      */
-    public function getAllRecords(array $params)
+    public function getAllRecords(array $params, array $filters = null)
     {
         try {
-            $records    = Read::all($params);
-            $total      = Read::count($params);
+            $records    = Read::all($params, $filters);
+            $total      = Read::count($params, $filters);
             $result     = new SuccessResourceCollection($records->toArray(), $total);
         }
         catch (Exception $e) {
             $result = $this->errorFromException($e, 'Ошибка получения записей');
-        }
-
-        return $result;
-    }
-
-    /**
-     * Получение списка записей по модулю
-     * GET /api/lessons?filter[module]={[0-9]+}
-     *
-     */
-    public function getAllRecordsByModule(array $params)
-    {
-        try {
-            $records    = Read::allByModuleId($params['filter']['module'], $params);
-            $total      = Read::count($params, null, $params['filter']['module']);
-            $result     = new SuccessResourceCollection($records->toArray(), $total);
-        }
-        catch (Exception $e) {
-            $result = $this->errorFromException($e, 'Ошибка получения записей');
-        }
-
-        return $result;
-    }
-
-    /**
-     * Получение списка записей по группе
-     * GET /api/lessons?filter[group]={[0-9]+}
-     *
-     */
-    public function getAllRecordsByGroup(array $params)
-    {
-        try {
-            $records    = Read::allByGroupId($params['filter']['group'], $params);
-            $total      = Read::count($params, $params['filter']['group']);
-            $result     = new SuccessResourceCollection($records->toArray(), $total);
-        }
-        catch (Exception $e) {
-            $result = $this->errorFromException($e, 'Ошибка получения записей');
-        }
-
-        return $result;
-    }
-
-    /**
-     * Получение списка записей по группе и модулю
-     * GET /api/lessons?filter[group]={[0-9]+}
-     *
-     */
-    public function getAllExamsForGroup(array $params)
-    {
-        try {
-            $records    = Read::allExamsByGroupId(
-                $params['filter']['group'],
-                $params
-            );
-            $total      = Read::count(
-                $params,
-                $params['filter']['group'],
-                null,
-                true
-            );
-            $result     = new SuccessResourceCollection($records->toArray(), $total);
-        }
-        catch (Exception $e) {
-            $result = $this->errorFromException($e, 'Ошибка получения записей');
-        }
-
-        return $result;
-    }
-
-    /**
-     * Получение записи
-     * GET /api/lessons/one?id={id}&module={}&group={}
-     *
-     */
-    public function getRecord(Request $request)
-    {
-        try {
-            $params = $request->query();
-            $records    = Read::byId($params['module'], $params['group'], $params['id']);
-            $result     = new SuccessResource($records);
-        }
-        catch (Exception $e) {
-            $result = $this->errorFromException($e, 'Ошибка получения записи');
         }
 
         return $result;
