@@ -58,14 +58,16 @@ class Read
         if (!isset($filters))
             return $query;
 
-        if ($filters['group_id'])
+        if (isset($filters['group_id']))
             $query = $query->where('group_id', $filters['group_id']);
 
-        if ($filters['module_id'])
+        if (isset($filters['module_id']))
             $query = $query->where('module_id', $filters['module_id']);
 
-        if($filters['exam'] == 'true')
+        if(isset($filters['exam']) && $filters['exam'] == 'true')
             $query = $query->where('public.modules.metadata', '=', 'exam');
+        if(isset($filters['exam']) && $filters['exam'] == 'false')
+            $query = $query->where('public.modules.metadata', '=', 'module');
 
         return $query;
     }
