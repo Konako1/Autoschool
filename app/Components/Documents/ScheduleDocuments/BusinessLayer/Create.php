@@ -17,17 +17,17 @@ class Create
         $lessons = $group->lessons();
 
         $lessonsArr = [];
+        $timeStart = $group->timing()->start;
+        $timeEnd = $group->timing()->end;
         foreach ($lessons as $lesson) {
-            $timeStart = Carbon::createFromFormat('Y-m-d H:i:s', $lesson->time_start)->toTimeString();
-            $timeEnd = Carbon::createFromFormat('Y-m-d H:i:s', $lesson->time_end)->toTimeString();
             $module = $lesson->module();
-            $instructor = $module->instructor();
+            $instructor = $course->instructor();
             $name_char = str_split("$instructor->name", 2)[0];
             $patronymic_char = str_split("$instructor->patronymic", 2)[0];
 
 
             $lessonsArr[] = [
-                'date' => DateFormatter::stringFormatWithTime($lesson->time_start),
+                'date' => DateFormatter::stringFormat($lesson->date),
                 'time' => "$timeStart — $timeEnd",
                 'module_name' => $module->name,
                 'instructor_fio' => "$instructor->surname $name_char. $patronymic_char.",
@@ -38,7 +38,7 @@ class Create
             'data' => [
                 'date_today' => DateFormatter::format(Carbon::now()),
                 'group' => [
-                    'category' => $course->category,
+                    'category' => $course->category()->name,
                     'name' => $group->name,
                     'time_start' => DateFormatter::stringFormat($group->studying_start_date),
                     'time_end' => DateFormatter::stringFormat($group->studying_end_date),
